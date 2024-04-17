@@ -48,7 +48,10 @@ public class Panel extends JPanel {
 
     public void update ()
     {
-        player.update();
+        if (currentState == PLAYING)
+        {
+            player.update();
+        }
     }
 
     public void paintComponent (Graphics g)
