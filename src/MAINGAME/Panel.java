@@ -1,20 +1,31 @@
 package MAINGAME;
 
+import Entities.Player;
 import UserInput.Keyboard;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class Panel extends JPanel {
 
-    public int x , y ;
-    Keyboard keyboard ;
-    Dimension dimension = new Dimension(1280,720);
+    //// Display Size Width . ////////
+    public static final int DEFAULT_TILE_SIZE = 32 ;
+    public final static float SCALE = 2f ;
+    public final static int TILES_IN_WIDTH = 20 ;
+    public final static int TILES_IN_HEIGHT = 12 ;
+    public final static int TILES_SIZE = (int)(DEFAULT_TILE_SIZE * SCALE);
+    public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
+    public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
+
+    Dimension dimension = new Dimension(GAME_WIDTH,GAME_HEIGHT);
+
+    /// constructor /////
+    Player player ;
+
     Panel (Game game)
     {
-        keyboard = new Keyboard(this) ;
+        player = new Player();
         setBackground(Color.BLACK);
-        addKeyListener(keyboard);
+        addKeyListener(player.getKeyboard());
         setAllSize();
     }
 
@@ -27,13 +38,12 @@ public class Panel extends JPanel {
 
     public void update ()
     {
-        keyboard.updateXY();
+        player.update();
     }
 
     public void paintComponent (Graphics g)
     {
         super.paintComponent(g);
-        g.setColor(Color.GREEN);
-        g.fillRect(x, y, 64, 64);
+        player.draw(g);
     }
 }

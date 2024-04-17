@@ -8,10 +8,8 @@ import java.awt.event.KeyListener;
 public class Keyboard implements KeyListener {
 
     public boolean Up , Down , Left , Right ;
-    Panel panel ;
-    public Keyboard (Panel panel)
+    public Keyboard ()
     {
-     this.panel = panel;
         System.out.println(1);
     }
     @Override
@@ -62,11 +60,4 @@ public class Keyboard implements KeyListener {
         }
     }
 
-    public void updateXY ()
-    {
-        if (Up) panel.y -= 10;
-        if (Down) panel.y += 10;
-        if (Left) panel.x -= 10;
-        if (Right) panel.x += 10;
-    }
 }
