@@ -2,9 +2,9 @@ package MAINGAME;
 
 import Entities.Player;
 import Tiles.TileManager;
-import UserInput.Keyboard;
 import javax.swing.*;
 import java.awt.*;
+import static GameStates.StateConstants.*;
 
 public class Panel extends JPanel {
 
@@ -23,12 +23,19 @@ public class Panel extends JPanel {
     Player player ;
     TileManager tileManager ;
 
+    /// GAME STATES  ////
+    MenuPanel menuPanel;
+    public static int currentState = MENU ;
+
     Panel (Game game)
     {
         tileManager = new TileManager() ;
         player = new Player();
+        menuPanel = new MenuPanel() ;
         setBackground(Color.BLACK);
         addKeyListener(player.getKeyboard());
+        addMouseListener(menuPanel.mouse);
+        addMouseMotionListener(menuPanel.mouse);
         setAllSize();
     }
 
@@ -47,7 +54,15 @@ public class Panel extends JPanel {
     public void paintComponent (Graphics g)
     {
         super.paintComponent(g);
-        tileManager.draw(g);
-        player.draw(g);
+        if (currentState == MENU)
+        {
+            menuPanel.draw(g);
+        }
+        if (currentState == PLAYING)
+        {
+            tileManager.draw(g);
+            player.draw(g);
+        }
+
     }
 }

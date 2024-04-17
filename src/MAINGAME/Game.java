@@ -1,5 +1,5 @@
 package MAINGAME;
-
+import static GameStates.StateConstants.*;
 public class Game implements Runnable{
 
     Frame frame ;
@@ -10,7 +10,6 @@ public class Game implements Runnable{
     Game ()
     {
         frame = new Frame(this);
-        //this.panel = frame.panel;
         startGame();
     }
 
@@ -27,8 +26,8 @@ public class Game implements Runnable{
 
         while(true) {
 
-            frame.panel.update();
-            frame.panel.repaint();
+                frame.panel.update();
+                frame.panel.repaint();
 
             try {
                 double remainingTime = nextDrawTime - System.nanoTime() ;

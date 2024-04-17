@@ -27,6 +27,8 @@ public class Player extends Entity{
     public void draw(Graphics g) {
         g.setColor(Color.white);
         g.fillRect(this.x,this.y , 64, 64);
+        g.setColor(Color.RED);
+        g.drawString("x :" + x + "  y : " + y , x , y - 10);
     }
 
 

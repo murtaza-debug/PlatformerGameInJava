@@ -9,13 +9,19 @@ import static MAINGAME.Panel.GAME_WIDTH;
 public class Frame extends JFrame {
 
     Panel panel;
+
     Frame(Game game)
     {
         panel = new Panel(game) ;
         add(panel);
+
         addKeyListener(panel.player.getKeyboard());
+        addMouseListener(panel.menuPanel.mouse);
+        addMouseMotionListener(panel.menuPanel.mouse);
+
         panel.requestFocus();
         pack();
+
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
