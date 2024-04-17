@@ -12,6 +12,7 @@ public class Player extends Entity{
     private Keyboard keyboard ;
 
 
+
     public Player ()
     {
         keyboard = new Keyboard() ;
@@ -24,7 +25,7 @@ public class Player extends Entity{
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.GREEN);
+        g.setColor(Color.white);
         g.fillRect(this.x,this.y , 64, 64);
     }
 

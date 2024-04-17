@@ -2,12 +2,14 @@ package Entities;
 
 import java.awt.*;
 
+import static MAINGAME.Panel.TILE_SIZE;
+
 public abstract class Entity {
 
     int x ;
     int y ;
-    int width ;
-    int height ;
+    int width = TILE_SIZE;
+    int height = TILE_SIZE;
     int speed = 10;
     Rectangle hitBox ;
 
