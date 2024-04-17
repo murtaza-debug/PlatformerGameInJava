@@ -3,8 +3,7 @@ package Tiles;
 import java.awt.*;
 
 import static MAINGAME.Panel.TILE_SIZE;
-import static Tiles.TileConstants.GRASS;
-import static Tiles.TileConstants.WALL;
+import static Tiles.TileConstants.*;
 
 public class TileManager extends Defaults{
 
@@ -28,6 +27,11 @@ public class TileManager extends Defaults{
                 if (map1[x][y] == WALL)
                 {
                     g.setColor(Color.GRAY);
+                    g.fillRect(y * TILE_SIZE, x * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                }
+                if (map1[x][y] == SKYE)
+                {
+                    g.setColor(Color.blue);
                     g.fillRect(y * TILE_SIZE, x * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }

@@ -11,7 +11,6 @@ public abstract class Entity {
     int width = TILE_SIZE;
     int height = TILE_SIZE;
     int speed = 10;
-    Rectangle hitBox ;
 
     public abstract void update ();
 
