@@ -9,4 +9,5 @@ public abstract class Defaults {
 
     public abstract void update ();
     public abstract void draw (Graphics g) ;
+
 }
