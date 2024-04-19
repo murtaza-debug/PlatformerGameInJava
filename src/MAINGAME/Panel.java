@@ -1,6 +1,7 @@
 package MAINGAME;
 
 import Entities.Player;
+import Tiles.TileHitBox;
 import Tiles.TileManager;
 import javax.swing.*;
 import java.awt.*;
@@ -29,8 +30,8 @@ public class Panel extends JPanel {
 
     Panel (Game game)
     {
-        tileManager = new TileManager() ;
         player = new Player();
+        tileManager = new TileManager(player) ;
         menuPanel = new MenuPanel() ;
         setBackground(Color.BLACK);
         addKeyListener(player.getKeyboard());
@@ -51,6 +52,7 @@ public class Panel extends JPanel {
         if (currentState == PLAYING)
         {
             player.update();
+            tileManager.update();
         }
     }
 

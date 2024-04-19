@@ -13,14 +13,19 @@ public class Player extends Entity{
 
 
     //// HIT_BOX //////
-    Rectangle hitBox;
+    public Rectangle hitBox;
     Dimension dimensionHitBox ;
+
+
+
+    /////// Gravity //////////
+    public boolean isMoving = false ;
 
     //////// CONSTRUCTOR /////////
     public Player ()
     {
         dimensionHitBox = new Dimension(TILE_SIZE,TILE_SIZE);
-        keyboard = new Keyboard() ;
+        keyboard = new Keyboard(this) ;
         hitBox = new Rectangle(dimensionHitBox);
     }
 
@@ -29,10 +34,13 @@ public class Player extends Entity{
 
     private void updatePosition ()
     {
-        if (keyboard.Up) this.y -= speed;
-        if (keyboard.Down) this.y += speed;
-        if (keyboard.Left) this.x -= speed;
-        if (keyboard.Right) this.x += speed;
+        System.out.println(isMoving);
+        if (isMoving) {
+            if (keyboard.Up) this.y -= speed;
+            if (keyboard.Down) this.y += speed;
+            if (keyboard.Left) this.x -= speed;
+            if (keyboard.Right) this.x += speed;
+        }
     }
 
     ///// UPDATE AND DRAW HIT_BOX  ///////
@@ -61,7 +69,7 @@ public class Player extends Entity{
         g.setColor(Color.white);
         g.fillRect(this.x,this.y , 64, 64);
         g.setColor(Color.RED);
-        g.drawString("x :" + x + "  y : " + y , x , y - 10);
+        //g.drawString("x :" + x + "  y : " + y , x , y - 10);
         drawHitBox(g);
     }
 

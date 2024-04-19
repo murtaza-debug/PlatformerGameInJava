@@ -1,5 +1,6 @@
 package UserInput;
 
+import Entities.Player;
 import MAINGAME.Panel;
 
 import java.awt.event.KeyEvent;
@@ -8,9 +9,10 @@ import java.awt.event.KeyListener;
 public class Keyboard implements KeyListener {
 
     public boolean Up , Down , Left , Right ;
-    public Keyboard ()
+    Player player;
+    public Keyboard (Player player)
     {
-        System.out.println(1);
+        this.player = player ;
     }
     @Override
     public void keyTyped(KeyEvent e) {
@@ -37,6 +39,8 @@ public class Keyboard implements KeyListener {
                     Right = true ;
                     break;
             }
+            
+            player.isMoving = true ;
     }
 
     @Override
@@ -58,6 +62,7 @@ public class Keyboard implements KeyListener {
                 break;
 
         }
+        player.isMoving = false ;
     }
 
 }

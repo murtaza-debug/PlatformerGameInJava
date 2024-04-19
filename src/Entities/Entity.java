@@ -6,8 +6,8 @@ import static MAINGAME.Panel.TILE_SIZE;
 
 public abstract class Entity {
 
-    int x ;
-    int y ;
+    public int x = 100;
+    public int y = 100;
     int width = TILE_SIZE;
     int height = TILE_SIZE;
     int speed = 10;
