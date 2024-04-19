@@ -39,8 +39,7 @@ public class Keyboard implements KeyListener {
                     Right = true ;
                     break;
             }
-            
-            player.isMoving = true ;
+
     }
 
     @Override
@@ -62,7 +61,6 @@ public class Keyboard implements KeyListener {
                 break;
 
         }
-        player.isMoving = false ;
     }
 
 }

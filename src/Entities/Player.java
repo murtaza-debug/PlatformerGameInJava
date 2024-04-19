@@ -35,12 +35,15 @@ public class Player extends Entity{
     private void updatePosition ()
     {
         System.out.println(isMoving);
-        if (isMoving) {
-            if (keyboard.Up) this.y -= speed;
-            if (keyboard.Down) this.y += speed;
-            if (keyboard.Left) this.x -= speed;
-            if (keyboard.Right) this.x += speed;
-        }
+            if (isMoving) {
+                if (keyboard.Up) this.y -= speed;
+                if (keyboard.Down) this.y += speed;
+                if (keyboard.Left) this.x -= speed;
+                if (keyboard.Right) this.x += speed;
+            }
+            if (keyboard.Up | keyboard.Down | keyboard.Left | keyboard.Right) isMoving = true ;
+            else isMoving = false ;
+
     }
 
     ///// UPDATE AND DRAW HIT_BOX  ///////
@@ -69,7 +72,7 @@ public class Player extends Entity{
         g.setColor(Color.white);
         g.fillRect(this.x,this.y , 64, 64);
         g.setColor(Color.RED);
-        //g.drawString("x :" + x + "  y : " + y , x , y - 10);
+        g.drawString("x :" + x + "  y : " + y , x + 70 , y);
         drawHitBox(g);
     }
 

@@ -36,8 +36,46 @@ public class TileHitBox {
     {
         for (int x = 0 ; x < 12 ; x++)
             for (int y = 0 ; y < 20 ; y++) {
+                player.isMoving = true ;
                 if (!CanMoveHere(map1, player, x, y))
-                    if (IsColliding(player, hitBox[x][y])) player.isMoving = false ;
+                    if (IsColliding(player, hitBox[x][y]))
+                    {
+
+                        /// ON GROUND ////
+                        if (player.y + TILE_SIZE >= hitBox[x][y].y)
+                        {
+                            if (x != 1)
+                                if (map1[x-1][y] == 0) {
+                                    player.y = hitBox[x][y].y - TILE_SIZE - 1;
+                                }
+                        }
+                        //// IT FROM ABOVE
+                        if (hitBox[x][y].y + TILE_SIZE >= player.y)
+                        {
+                            if (x!= 11)
+                                if (map1[x+1][y] == 0) {
+                                    player.y = hitBox[x][y].y + TILE_SIZE + 1;
+                                }
+                        }
+                        ///// LEFT HIT ///////
+                         if ((hitBox[x][y].x + TILE_SIZE) >= player.x) {
+                             if (y != 19)
+                                if (map1[x][y+1] == 0)
+                                {
+                                    player.x = hitBox[x][y].x + TILE_SIZE + 1;
+                                }
+
+                        }
+                         ////// RIGHT HIT ////////
+                         if (player.x + TILE_SIZE >= hitBox[x][y].x)
+                        {
+                            if (y != 0)
+                                if (map1[x][y-1] == 0) {
+                                    player.x = hitBox[x][y].x - 1 - TILE_SIZE;
+                                }
+                        }
+
+                    }
             }
     }
     public void draw (Graphics g) {
@@ -48,8 +86,12 @@ public class TileHitBox {
                 //System.out.println((y));
                 g.drawRect(hitBox[x][y].x
                         , hitBox[x][y].y, TILE_SIZE , TILE_SIZE );
-              //  System.out.println("HitBox x: " + hitBox[x][y].x  + " x : " + x);
-                //  System.out.println("HitBox y: " + hitBox[x][y].y  + " y : " + y);
+                if (!CanMoveHere(map1, player, x, y))
+                    if (IsColliding(player, hitBox[x][y])) {
+                        g.setColor(Color.pink);
+                        g.drawString("X : " + hitBox[x][y].x + " Y : " +
+                                hitBox[x][y].y, hitBox[x][y].x, hitBox[x][y].y - 70);
+                    }
             }
     }
 
