@@ -44,8 +44,9 @@ public class TileHitBox {
                         /// ON GROUND ////
                         if (player.y + TILE_SIZE >= hitBox[x][y].y)
                         {
-                            if (x != 1)
+                            if (x != 0)
                                 if (map1[x-1][y] == 0) {
+                                    player.hitBox.y = hitBox[x][y].y - TILE_SIZE - 1;
                                     player.y = hitBox[x][y].y - TILE_SIZE - 1;
                                 }
                         }
@@ -54,6 +55,7 @@ public class TileHitBox {
                         {
                             if (x!= 11)
                                 if (map1[x+1][y] == 0) {
+                                    player.hitBox.y = hitBox[x][y].y +TILE_SIZE + 1;
                                     player.y = hitBox[x][y].y + TILE_SIZE + 1;
                                 }
                         }
@@ -62,6 +64,7 @@ public class TileHitBox {
                              if (y != 19)
                                 if (map1[x][y+1] == 0)
                                 {
+                                    player.hitBox.x = hitBox[x][y].x + TILE_SIZE + 1;
                                     player.x = hitBox[x][y].x + TILE_SIZE + 1;
                                 }
 
@@ -71,6 +74,7 @@ public class TileHitBox {
                         {
                             if (y != 0)
                                 if (map1[x][y-1] == 0) {
+                                    player.hitBox.x = hitBox[x][y].x - TILE_SIZE - 1;
                                     player.x = hitBox[x][y].x - 1 - TILE_SIZE;
                                 }
                         }
