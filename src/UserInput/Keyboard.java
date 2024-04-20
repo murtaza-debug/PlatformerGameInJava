@@ -1,9 +1,14 @@
 package UserInput;
 
 import Entities.Player;
+import MAINGAME.Panel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+
+import static GameStates.StateConstants.MENU;
+import static GameStates.StateConstants.PLAYING;
 
 public class Keyboard implements KeyListener {
 
@@ -15,6 +20,14 @@ public class Keyboard implements KeyListener {
     }
     @Override
     public void keyTyped(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_ENTER:
+            case MouseEvent.BUTTON1 :
+                if (Panel.currentState == MENU)
+                    Panel.currentState = PLAYING ;
+                else Panel.currentState = MENU ;
+                break ;
+        }
 
     }
 

@@ -17,7 +17,6 @@ public class Mouse implements MouseListener , MouseMotionListener {
         switch (e.getButton())
         {
             case MouseEvent.BUTTON1 :
-                System.out.println("Clicked");
                 if (Panel.currentState == MENU)
                     Panel.currentState = PLAYING ;
                 else Panel.currentState = MENU ;
