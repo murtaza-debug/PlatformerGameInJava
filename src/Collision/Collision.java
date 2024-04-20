@@ -1,8 +1,6 @@
 package Collision;
 
 import Entities.Player;
-import Tiles.TileHitBox;
-import Tiles.TileMap;
 
 import java.awt.*;
 

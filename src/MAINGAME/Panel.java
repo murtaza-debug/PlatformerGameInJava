@@ -1,7 +1,6 @@
 package MAINGAME;
 
 import Entities.Player;
-import Tiles.TileHitBox;
 import Tiles.TileManager;
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +16,7 @@ public class Panel extends JPanel {
     public final static int TILE_SIZE = (int)(DEFAULT_TILE_SIZE * SCALE);
     public final static int GAME_WIDTH = TILE_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILE_SIZE * TILES_IN_HEIGHT;
+
 
     Dimension dimension = new Dimension(GAME_WIDTH,GAME_HEIGHT);
 

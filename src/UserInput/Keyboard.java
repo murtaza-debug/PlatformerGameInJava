@@ -1,14 +1,13 @@
 package UserInput;
 
 import Entities.Player;
-import MAINGAME.Panel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener {
 
-    public boolean Up , Down , Left , Right ;
+    public boolean Space, Down , Left , Right ;
     Player player;
     public Keyboard (Player player)
     {
@@ -24,9 +23,9 @@ public class Keyboard implements KeyListener {
 
             switch (e.getKeyCode())
             {
-                case KeyEvent.VK_W :
+                case KeyEvent.VK_SPACE :
                     System.out.println("W");
-                    Up = true ;
+                    Space = true ;
                     break;
                 case KeyEvent.VK_S :
                     System.out.println("D");
@@ -47,8 +46,8 @@ public class Keyboard implements KeyListener {
 
         switch (e.getKeyCode())
         {
-            case KeyEvent.VK_W :
-                Up = false ;
+            case KeyEvent.VK_SPACE :
+                Space = false ;
                 break;
             case KeyEvent.VK_S :
                 Down = false ;

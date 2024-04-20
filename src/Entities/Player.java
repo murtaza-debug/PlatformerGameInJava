@@ -1,12 +1,26 @@
 package Entities;
 
+import Tiles.Tile;
+import Tiles.TileManager;
+import Tiles.TileMap;
 import UserInput.Keyboard;
 
 import java.awt.*;
 import static MAINGAME.Panel.*;
 
-public class Player extends Entity{
+public class Player {
 
+    public int x = 64;
+    public int y = 64;
+
+    int width = TILE_SIZE;
+    int height = TILE_SIZE;
+    double maxSpeed = 10 ;
+    public double xSpeed  = 0;
+    public double ySpeed = 0;
+
+    TileManager tileManager;
+    int [] [] map1 = TileMap.GetMap();
 
     /// defaults ////
     private Keyboard keyboard ;
@@ -14,8 +28,6 @@ public class Player extends Entity{
 
     //// HIT_BOX //////
     public Rectangle hitBox;
-    Dimension dimensionHitBox ;
-
 
 
     /////// Gravity //////////
@@ -24,9 +36,9 @@ public class Player extends Entity{
     //////// CONSTRUCTOR /////////
     public Player ()
     {
-        dimensionHitBox = new Dimension(TILE_SIZE,TILE_SIZE);
         keyboard = new Keyboard(this) ;
-        hitBox = new Rectangle(dimensionHitBox);
+        hitBox = new Rectangle(x, y,width,height);
+        tileManager = new TileManager(this);
     }
 
 
@@ -34,45 +46,92 @@ public class Player extends Entity{
 
     private void updatePosition ()
     {
-        System.out.println(isMoving);
-            if (isMoving) {
-                if (keyboard.Up) this.y -= speed;
-                if (keyboard.Down) this.y += speed;
-                if (keyboard.Left) this.x -= speed;
-                if (keyboard.Right) this.x += speed;
+        /// moving left and right //////
+
+        if (keyboard.Left && keyboard.Right || !keyboard.Left && !keyboard.Right) xSpeed *= 0.7 ;
+
+        else if (keyboard.Left && !keyboard.Right) xSpeed --;
+        else if (keyboard.Right && !keyboard.Left) xSpeed ++;
+
+        if (xSpeed > 0 && xSpeed < 0.75) xSpeed = 0;
+        if (xSpeed < 0 && xSpeed > -0.75) xSpeed = 0;
+
+        if (xSpeed > maxSpeed) xSpeed = maxSpeed;
+        if (xSpeed < -maxSpeed) xSpeed = -maxSpeed;
+
+        /////// JUMPING ////////
+        if (keyboard.Space)
+        {
+            hitBox.y ++ ;
+            for(Tile tile : tileManager.tiles) {
+                if (tile.hitBox.intersects(hitBox)) ySpeed = -7.4;
             }
-            if (keyboard.Up | keyboard.Down | keyboard.Left | keyboard.Right) isMoving = true ;
-            else isMoving = false ;
+            hitBox.y --;
+        }
 
-    }
+        ySpeed += 0.2;
 
-    ///// UPDATE AND DRAW HIT_BOX  ///////
+        ///// Horizontal Collisions /////////////
+        hitBox.x += xSpeed;
+        for (Tile tile : tileManager.tiles) {
+            if (tile.hitBox.intersects(hitBox))
+            {
+                hitBox.x -= xSpeed;
+                while (!tile.hitBox.intersects(hitBox)) {
+                    hitBox.x += (int) Math.signum(xSpeed);
+                }
+                hitBox.x -= (int) Math.signum(xSpeed);
+                xSpeed = 0;
+                x = hitBox.x;
 
-    public void updateHitBox ()
-    {
+            }
+        }
+
+        ///// Vertical Collisions //////////////
+
+        hitBox.y += ySpeed;
+        for (Tile tile : tileManager.tiles) {
+            if (tile.hitBox.intersects(hitBox))
+            {
+                hitBox.y -= ySpeed;
+                while (!tile.hitBox.intersects(hitBox)) {
+                    hitBox.y += (int) Math.signum(ySpeed);
+                }
+                hitBox.y -= (int) Math.signum(ySpeed);
+                ySpeed = 0;
+                y = hitBox.y;
+
+            }
+        }
+
+        x += xSpeed ;
+        y += ySpeed ;
         hitBox.x = x;
         hitBox.y = y;
     }
+
+
+
     public void drawHitBox (Graphics g)
     {
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.RED);
         g.drawRect(hitBox.x,hitBox.y,hitBox.width,hitBox.height);
     }
 
     ////// UPDATE AND DRAW /////
 
-    @Override
+
     public void update() {
         updatePosition();
-        updateHitBox();
     }
 
-    @Override
+
+
     public void draw(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect(this.x,this.y , 64, 64);
+        g.fillRect(x, y, 64, 64);
         g.setColor(Color.RED);
-        g.drawString("x :" + x + "  y : " + y , x + 70 , y);
+        g.drawString("x :" + x + "  y : " + y, x + 70 , y);
         drawHitBox(g);
     }
 
