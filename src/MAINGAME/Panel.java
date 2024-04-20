@@ -32,7 +32,7 @@ public class Panel extends JPanel {
     {
         player = new Player();
         tileManager = new TileManager(player) ;
-        menuPanel = new MenuPanel() ;
+        menuPanel = new MenuPanel(player.getKeyboard()) ;
         setBackground(Color.BLACK);
         addKeyListener(player.getKeyboard());
         addMouseListener(menuPanel.mouse);

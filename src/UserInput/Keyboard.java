@@ -5,14 +5,13 @@ import MAINGAME.Panel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
 
 import static GameStates.StateConstants.MENU;
 import static GameStates.StateConstants.PLAYING;
 
 public class Keyboard implements KeyListener {
 
-    public boolean Space, Down , Left , Right ;
+    public boolean Space, Attack1 , Attack2 , Left , Right ;
     Player player;
     public Keyboard (Player player)
     {
@@ -22,7 +21,6 @@ public class Keyboard implements KeyListener {
     public void keyTyped(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_ENTER:
-            case MouseEvent.BUTTON1 :
                 if (Panel.currentState == MENU)
                     Panel.currentState = PLAYING ;
                 else Panel.currentState = MENU ;
@@ -40,9 +38,11 @@ public class Keyboard implements KeyListener {
                     System.out.println("W");
                     Space = true ;
                     break;
-                case KeyEvent.VK_S :
-                    System.out.println("D");
-                    Down = true ;
+                case KeyEvent.VK_F :
+                    Attack1 = true ;
+                    break;
+                case KeyEvent.VK_G :
+                    Attack2 = true ;
                     break;
                 case KeyEvent.VK_A :
                     Left = true ;
@@ -62,8 +62,11 @@ public class Keyboard implements KeyListener {
             case KeyEvent.VK_SPACE :
                 Space = false ;
                 break;
-            case KeyEvent.VK_S :
-                Down = false ;
+            case KeyEvent.VK_F :
+                Attack1 = false ;
+                break;
+            case KeyEvent.VK_G :
+                Attack2 = false ;
                 break;
             case KeyEvent.VK_A :
                 Left = false ;

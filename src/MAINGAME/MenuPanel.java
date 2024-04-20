@@ -2,6 +2,8 @@ package MAINGAME;
 
 import javax.swing.*;
 import java.awt.*;
+
+import UserInput.Keyboard;
 import UserInput.Mouse;
 
 import static MAINGAME.Panel.GAME_HEIGHT;
@@ -11,11 +13,14 @@ public class MenuPanel extends JPanel {
 
     Dimension dimension = new Dimension(GAME_WIDTH,GAME_HEIGHT);
     Mouse mouse ;
+    Keyboard keyboard;
 
-    public MenuPanel ()
+    public MenuPanel (Keyboard keyboard)
     {
+        this.keyboard = keyboard;
         mouse = new Mouse();
         setBackground(Color.BLACK);
+        addKeyListener(keyboard);
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
         setAllSize();
