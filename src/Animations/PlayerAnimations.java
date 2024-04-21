@@ -88,7 +88,7 @@ public class PlayerAnimations {
 
         }
 
-        for (int i = 0 , j = GetTotalImages(ATTACK_LEFT_1) - 1 ; i <=GetTotalImages(ATTACK_LEFT_1) &&
+        for (int i = 0 , j = GetTotalImages(ATTACK_LEFT_1) - 1 ; i < GetTotalImages(ATTACK_LEFT_1) &&
                     j >= 0 ; i++ , j-- )
         {
             attackLeft1Animations[i] = attackLeft1Image.getSubimage(i * width, 0, 200, 200);
@@ -97,6 +97,7 @@ public class PlayerAnimations {
             attackLeft2Animations[i] = attackLeft2Image.getSubimage(i * width, 0, 200, 200);
             attackRight2Animations[j] = attackRight2Image.getSubimage(j * width, 0, 200, 200);
         }
+
 
     }
 

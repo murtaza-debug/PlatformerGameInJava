@@ -64,17 +64,10 @@ public class TileManager extends Defaults{
         for (int i = 0; i < background1.length ; i++) {
             g.drawImage(background1[i] , 0 , 0 , null);
         }
-        for (int i = 0; i < background2.length ; i++) {
-            g.drawImage(background2[i] , 0 , 0 , null);
-        }
+
+        for (Tile tile : tiles) tile.draw(g) ;
 
 
-        for (int x = 0 ; x < map1.length ; x++) {
-            for (int y = 0 ;  y < map1[0].length ; y++) {
-                if (map1[x][y] != SKYE)
-                    for (Tile tile : tiles) tile.draw(g) ;
-            }
-        }
 
     }
 

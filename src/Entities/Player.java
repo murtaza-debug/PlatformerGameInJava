@@ -16,8 +16,8 @@ public class Player {
     ////// Movement /////////
     public int x = 64;
     public int y = 64;
-    int width = 45;
-    int height = TILE_SIZE;
+    int width = TILE_SIZE + 144;
+    int height = TILE_SIZE + 144;
     double maxSpeed = 5 ;
     public double xSpeed  = 0;
     public double ySpeed = 0;
@@ -51,7 +51,7 @@ public class Player {
     {
         playerAnimations = new PlayerAnimations(this);
         keyboard = new Keyboard(this) ;
-        hitBox = new Rectangle(x , y,width,height - 10);
+        hitBox = new Rectangle(x , y,width - 170 ,height - 150);
         tileManager = new TileManager(this);
     }
 
@@ -60,11 +60,17 @@ public class Player {
     {
         if (isMoving)
         {
-            if (direction == LEFT && keyboard.Left) {
-                currentAnimation = RUNNING_LEFT;
+            if (direction == LEFT && keyboard.Left && !keyboard.Right) {
+                if (currentAnimation != RUNNING_LEFT ) {
+                    currentAnimation = RUNNING_LEFT;
+                    aniIndex = 0;
+                }
             }
-            if (direction == RIGHT && keyboard.Right) {
-                currentAnimation = RUNNING_RIGHT;
+            if (direction == RIGHT && keyboard.Right && !keyboard.Left) {
+                if (currentAnimation != RUNNING_RIGHT ) {
+                    currentAnimation = RUNNING_RIGHT;
+                    aniIndex = 0;
+                }
             }
         }
         else {
@@ -80,14 +86,14 @@ public class Player {
         if (direction == LEFT && keyboard.Attack1 && !keyboard.Attack2){
             currentAnimation = ATTACK_LEFT_1 ;
         }
-        if (direction == RIGHT && keyboard.Attack2 && !keyboard.Attack1)
+        /*if (direction == RIGHT && keyboard.Attack2 && !keyboard.Attack1)
         {
             currentAnimation = ATTACK_RIGHT_2 ;
         }
         if (direction == LEFT && keyboard.Attack2 && !keyboard.Attack1)
         {
             currentAnimation = ATTACK_LEFT_2 ;
-        }
+        }*/
     }
 
 
@@ -98,7 +104,7 @@ protected void updateAnimationTick()
     {
         aniTick = 0;
         aniIndex++;
-        if (aniIndex >= GetTotalImages(currentAnimation) )
+        if (aniIndex >= GetTotalImages(currentAnimation) - 1 )
         {
             aniIndex = 0;
             currentAnimation = IDLE_RIGHT ;
@@ -197,8 +203,8 @@ public void drawHitBox (Graphics g)
 
 
 public void update() {
-    updateAnimationTick();
     updateAnimation();
+    updateAnimationTick();
     updatePosition();
 }
 
@@ -207,39 +213,39 @@ public void update() {
 public void draw(Graphics g) {
     g.setColor(Color.white);
     if (currentAnimation == IDLE_RIGHT) {
-        g.drawImage(playerAnimations.idleRightAnimations[aniIndex], x - 70, y - 70, null);
+        g.drawImage(playerAnimations.idleRightAnimations[aniIndex], x - 80, y - 70,width ,height, null);
     }
     if (currentAnimation == IDLE_LEFT) {
-        g.drawImage(playerAnimations.idleLeftAnimations[aniIndex], x-80, y - 70, null);
+        g.drawImage(playerAnimations.idleLeftAnimations[aniIndex], x-90, y - 70, width ,height , null);
     }
     if (currentAnimation == RUNNING_RIGHT) {
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.runningRightAnimations[aniIndex], x - 70, y - 70, null);
+        g.drawImage(playerAnimations.runningRightAnimations[aniIndex], x - 80, y - 70, width ,height ,null);
     }
     if (currentAnimation == RUNNING_LEFT) {
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.runningLeftAnimations[aniIndex], x - 80, y - 70, null);
+        g.drawImage(playerAnimations.runningLeftAnimations[aniIndex], x - 90, y - 70,width,height  , null);
     }
     if (currentAnimation == ATTACK_LEFT_1){
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackLeft1Animations[aniIndex], x - 70, y - 70, null);
+        g.drawImage(playerAnimations.attackLeft1Animations[aniIndex], x - 80, y - 70,width,height , null);
     }
     if (currentAnimation == ATTACK_RIGHT_1){
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackRight1Animations[aniIndex], x - 80, y - 70, null);
+        g.drawImage(playerAnimations.attackRight1Animations[aniIndex], x - 90, y - 70,width,height , null);
     }
     if (currentAnimation == ATTACK_LEFT_2){
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackLeft2Animations[aniIndex], x - 70, y - 70, null);
+        g.drawImage(playerAnimations.attackLeft2Animations[aniIndex], x - 80, y - 70,width,height , null);
     }
     if (currentAnimation == ATTACK_RIGHT_2){
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackRight2Animations[aniIndex], x - 80, y - 70, null);
+        g.drawImage(playerAnimations.attackRight2Animations[aniIndex], x - 90, y - 70,width,height , null);
     }
 
 
     g.setColor(Color.RED);
-    g.drawString("x :" + x + "  y : " + y, x + 70 , y);
+    //g.drawString("x :" + x + "  y : " + y, x + 70 , y);
     //drawHitBox(g);
 }
 
