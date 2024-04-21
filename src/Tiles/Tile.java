@@ -30,12 +30,12 @@ public class Tile {
 
     private void loadTileImages ()
     {
-        tileImage[1] = Load.Image("Dirt1.png");
-        tileImage[2] = Load.Image("Dirt2.png");
-        tileImage[3] = Load.Image("Dirt3.png");
-        tileImage[4] = Load.Image("Stone1.png");
+        tileImage[1] = Load.Image("Dirt1o.png");
+        tileImage[2] = Load.Image("Dirt2o.png");
+        tileImage[3] = Load.Image("Dirt3o.png");
+        tileImage[4] = Load.Image("Stone1o.png");
         tileImage[5] = Load.Image("Stone2.png");
-        tileImage[6] = Load.Image("Stone3.png");
+        tileImage[6] = Load.Image("Dirt4o.png");
     }
 
     public void draw(Graphics g) {
@@ -50,8 +50,8 @@ public class Tile {
             g.drawImage(tileImage[Stone1],x,y,width,height,null) ;
         if (type == Stone2)
             g.drawImage(tileImage[Stone2],x,y,width,height,null) ;
-        if (type == Stone3)
-            g.drawImage(tileImage[Stone3],x,y,width,height,null) ;
+        if (type == Dirt4)
+            g.drawImage(tileImage[Dirt4],x,y,width,height,null) ;
 
 
     }

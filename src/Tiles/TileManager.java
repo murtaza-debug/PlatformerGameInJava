@@ -1,5 +1,6 @@
 package Tiles;
 
+import Animations.PropAnimations;
 import Entities.Player;
 import Loader.Load;
 
@@ -9,12 +10,14 @@ import java.util.ArrayList;
 
 import static MAINGAME.Panel.*;
 import static Tiles.TileConstants.*;
+import static Tiles.propConstants.Grass2;
 
 public class TileManager extends Defaults{
 
     private int[][] map1 = TileMap.GetMap() ;
 
     public ArrayList<Tile> tiles = new ArrayList<>();
+    public ArrayList<PropAnimations> propAnimations = new ArrayList<>();
 
     Player player;
 
@@ -37,23 +40,30 @@ public class TileManager extends Defaults{
         background2[2] = Load.Image("Skye3.png");
         background2[3] = Load.Image("Skye4.png");
 
-        makeWalls();
+        makeTiles();
     }
     @Override
     public void update() {
-
+        for(int i = 0 ; i < propAnimations.size() ; i++)
+            propAnimations.get(i).update();
     }
 
-
-    public void makeWalls (){
+    public void makeTiles(){
         for (int x = 0 ; x < map1.length ; x++) {
             for (int y = 0; y < map1[x].length; y++)
             {
-                if (map1[x][y] != SKYE)
+                if (map1[x][y] != SKYE && map1[x][y] != Grass2)
                 {
                     tiles.add(new Tile(y*TILE_SIZE , x*TILE_SIZE, TILE_SIZE, TILE_SIZE));
                     tiles.getLast().type = map1[x][y] ;
                 }
+                if (map1[x][y] == Grass2)
+                {
+                    propAnimations.add(new PropAnimations(y * TILE_SIZE , x * TILE_SIZE
+                            , TILE_SIZE , TILE_SIZE , Grass2));
+                    propAnimations.getLast().props.type = map1[x][y] ;
+                }
+
             }
         }
 
@@ -67,7 +77,7 @@ public class TileManager extends Defaults{
 
         for (Tile tile : tiles) tile.draw(g) ;
 
-
+        for (PropAnimations propAnimation : propAnimations ) propAnimation.draw(g);
 
     }
 
