@@ -4,6 +4,7 @@ public class Game implements Runnable{
 
     Frame frame ;
     final int FPS = 60 ;
+    final in UPS = 80 ;
     Thread thread ;
 
     //Panel panel ;
@@ -15,21 +16,28 @@ public class Game implements Runnable{
 
     void startGame ()
     {
-        thread = new Thread();
+        thread = new Thread(this);
         thread.start();
-        run();
     }
     @Override
     public void run() {
         double timeTodraw =  (1_000_000_000 / FPS );
-        long nextDrawTime = (long) (System.nanoTime() + timeTodraw);
+        double timeToupdate = (1_000_000_000 / UPS) ;
+
+        long currentTime = System.nanoTime() ;
+        long previousTime = System.nanoTime () ;
 
         while(true) {
+                currentTime = System.nanoTime () ;
 
                 frame.panel.update();
+                if (currentTime - previousTime >= timeTodraw) 
+                {
                 frame.panel.repaint();
+                previousTime = currentTime; 
+                }
 
-            try {
+            /*try {
                 double remainingTime = nextDrawTime - System.nanoTime() ;
                 remainingTime = remainingTime / 1_000_000 ;
 
@@ -39,7 +47,7 @@ public class Game implements Runnable{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            nextDrawTime += timeTodraw;
+            nextDrawTime += timeTodraw; */
         }
     }
 }
