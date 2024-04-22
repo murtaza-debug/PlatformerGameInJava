@@ -8,6 +8,6 @@ public abstract class Defaults {
     int height = TILE_SIZE ;
 
     public abstract void update ();
-    public abstract void draw (Graphics g) ;
+    public abstract void draw (Graphics2D g) ;
 
 }

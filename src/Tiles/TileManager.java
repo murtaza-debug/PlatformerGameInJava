@@ -59,7 +59,7 @@ public class TileManager extends Defaults{
                 }
                 if (map1[x][y] == Grass2)
                 {
-                    propAnimations.add(new PropAnimations(y * TILE_SIZE , x * TILE_SIZE
+                    propAnimations.add(new PropAnimations(y * TILE_SIZE  + y - x, x * TILE_SIZE
                             , TILE_SIZE , TILE_SIZE , Grass2));
                     propAnimations.getLast().props.type = map1[x][y] ;
                 }
@@ -70,12 +70,13 @@ public class TileManager extends Defaults{
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         for (int i = 0; i < background1.length ; i++) {
             g.drawImage(background1[i] , 0 , 0 , null);
         }
 
-        for (Tile tile : tiles) tile.draw(g) ;
+        for (Tile tile : tiles)
+            {tile.draw(g) ;
 
         for (PropAnimations propAnimation : propAnimations ) propAnimation.draw(g);
 

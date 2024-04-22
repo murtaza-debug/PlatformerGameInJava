@@ -31,7 +31,7 @@ public class PropAnimations {
     {
         updateAnimationTick();
     }
-    public void draw (Graphics g)
+    public void draw (Graphics2D g)
     {
         g.drawImage(props.propImage[aniIndex],props.x,props.y,props.width - 10,props.height + 20,null );
     }

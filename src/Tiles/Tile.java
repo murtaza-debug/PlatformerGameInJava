@@ -38,20 +38,20 @@ public class Tile {
         tileImage[6] = Load.Image("Dirt4o.png");
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
 
         if (type == Dirt1)
-            g.drawImage(tileImage[Dirt1],x,y,width,height,null) ;
+            g.drawImage(tileImage[Dirt1],x,y,null) ;
         if (type == Dirt2)
-            g.drawImage(tileImage[Dirt2],x,y,width,height,null) ;
+            g.drawImage(tileImage[Dirt2],x,y,null) ;
         if (type == Dirt3)
-            g.drawImage(tileImage[Dirt3],x,y,width,height,null) ;
+            g.drawImage(tileImage[Dirt3],x,y,null) ;
         if (type == Stone1)
-            g.drawImage(tileImage[Stone1],x,y,width,height,null) ;
+            g.drawImage(tileImage[Stone1],x,y,null) ;
         if (type == Stone2)
-            g.drawImage(tileImage[Stone2],x,y,width,height,null) ;
+            g.drawImage(tileImage[Stone2],x,y,null) ;
         if (type == Dirt4)
-            g.drawImage(tileImage[Dirt4],x,y,width,height,null) ;
+            g.drawImage(tileImage[Dirt4],x,y,null) ;
 
 
     }

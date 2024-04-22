@@ -59,14 +59,16 @@ public class Panel extends JPanel {
     public void paintComponent (Graphics g)
     {
         super.paintComponent(g);
+
+        Graphics2D g2d = (Graphics2D)g;
         if (currentState == MENU)
         {
-            menuPanel.draw(g);
+            menuPanel.draw(g2d);
         }
         if (currentState == PLAYING)
         {
-            tileManager.draw(g);
-            player.draw(g);
+            tileManager.draw(g2d);
+            player.draw(g2d);
         }
 
     }

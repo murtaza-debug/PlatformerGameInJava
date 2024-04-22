@@ -25,14 +25,14 @@ public class Game implements Runnable{
         double timeToUpdate = (1_000_000_000 / UPS) ;
 
         long previousTime = System.nanoTime () ;
+        long currentTime ;
         double deltaU = 0 ;
         double deltaD = 0 ;
 
         while(true) {
-            long currentTime = System.nanoTime() ;
+            currentTime = System.nanoTime() ;
             deltaU +=  (currentTime - previousTime) / timeToUpdate ;
             deltaD +=  (currentTime - previousTime) / timeToDraw ;
-
             previousTime = currentTime;
 
             if (deltaU >= 1 ) {
@@ -44,6 +44,7 @@ public class Game implements Runnable{
                 frame.panel.repaint();
                 deltaD -- ;
             }
+
 
         }
 
