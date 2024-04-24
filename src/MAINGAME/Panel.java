@@ -1,5 +1,6 @@
 package MAINGAME;
 
+import Entities.DarkKnight;
 import Entities.Player;
 import Tiles.Tile;
 import Tiles.TileManager;
@@ -21,8 +22,8 @@ public class Panel extends JPanel {
     //// CAMERA //////////
     public static int xOffset ;
     public static int yOffset ;
-    public static int leftBorder = (int) ( 0.3 * GAME_HEIGHT) ;
-    public static int rightBorder = (int) ( 0.7 * GAME_HEIGHT) ;
+    public static int leftBorder = (int) ( 0.5 * GAME_WIDTH) ;
+    public static int rightBorder = (int) ( 0.6 * GAME_WIDTH) ;
     public static int maxGameWidth = (GetMap()[0].length - TILES_IN_WIDTH)* TILE_SIZE ;
     public static int maxGameHeight = (GetMap().length - TILES_IN_HEIGHT) * TILE_SIZE;
 
@@ -30,19 +31,23 @@ public class Panel extends JPanel {
 
     Dimension dimension = new Dimension(GAME_WIDTH,GAME_HEIGHT);
 
-    /// constructor /////
+    //// ENTITIES AND MAPS //////
     Player player ;
     TileManager tileManager ;
+
+    ////// ENEMIES ///////
+    DarkKnight darkKnight ;
 
     /// GAME STATES  ////
     MenuPanel menuPanel;
     public static int currentState = MENU ;
-
+    /// constructor /////
     Panel (Game game)
     {
         player = new Player();
         tileManager = new TileManager(player) ;
         menuPanel = new MenuPanel(player.getKeyboard()) ;
+        darkKnight = new DarkKnight(100,100,64,64);
         setBackground(Color.BLACK);
         addKeyListener(player.getKeyboard());
         addMouseListener(menuPanel.mouse);
@@ -102,6 +107,7 @@ public class Panel extends JPanel {
         if (currentState == PLAYING)
         {
             tileManager.draw(g2d , xOffset);
+            darkKnight.draw(g2d);
             player.draw(g2d , xOffset);
         }
 

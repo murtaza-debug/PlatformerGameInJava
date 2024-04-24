@@ -5,7 +5,7 @@ import Loader.Load;
 
 import java.awt.image.BufferedImage;
 
-import static Animations.Constants.*;
+import static Animations.PlayerConstants.*;
 
 public class PlayerAnimations {
 

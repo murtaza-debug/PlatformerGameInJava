@@ -6,16 +6,15 @@ public class Enemy {
 
     int x , y , width , height;
     Rectangle hitBox;
-    int enemyType ;
-    private int aniIndex , enemyState , enemyType;
+    public int enemyType ;
+    private int aniIndex , enemyState;
     public int aniTick , aniSpeed = 20 ;
 
-    public Enemy (int x , int y, int width, int height , int enemyType){
+    public Enemy (int x , int y, int width, int height){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.enemyType = enemyType ;
         initHitBox(x,y,width,height);
     }
 

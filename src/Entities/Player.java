@@ -8,7 +8,7 @@ import UserInput.Keyboard;
 
 import java.awt.*;
 
-import static Animations.Constants.*;
+import static Animations.PlayerConstants.*;
 import static MAINGAME.Panel.*;
 
 public class Player {
@@ -216,14 +216,14 @@ public void draw(Graphics2D g , int xOffset) {
     if (currentAnimation == IDLE_RIGHT) {
         g.drawImage(playerAnimations.idleRightAnimations[aniIndex], x - 80 - xOffset, y - 70, null);
     }
-    if (currentAnimation == IDLE_LEFT) {
+    else if (currentAnimation == IDLE_LEFT) {
         g.drawImage(playerAnimations.idleLeftAnimations[aniIndex], x -90 - xOffset, y - 70, null);
     }
     if (currentAnimation == RUNNING_RIGHT) {
         aniSpeed = 10 ;
         g.drawImage(playerAnimations.runningRightAnimations[aniIndex], x - 80 - xOffset, y - 70,null);
     }
-    if (currentAnimation == RUNNING_LEFT) {
+    else if (currentAnimation == RUNNING_LEFT) {
         aniSpeed = 10 ;
         g.drawImage(playerAnimations.runningLeftAnimations[aniIndex], x - 90 - xOffset , y - 70, null);
     }
@@ -231,7 +231,7 @@ public void draw(Graphics2D g , int xOffset) {
         aniSpeed = 10 ;
         g.drawImage(playerAnimations.attackLeft1Animations[aniIndex], x - 80 - xOffset , y - 70, null);
     }
-    if (currentAnimation == ATTACK_RIGHT_1){
+    else if (currentAnimation == ATTACK_RIGHT_1){
         aniSpeed = 10 ;
         g.drawImage(playerAnimations.attackRight1Animations[aniIndex], x - 90 - xOffset , y - 70, null);
     }
@@ -239,7 +239,7 @@ public void draw(Graphics2D g , int xOffset) {
         aniSpeed = 10 ;
         g.drawImage(playerAnimations.attackLeft2Animations[aniIndex], x - 80 - xOffset , y - 70 , null);
     }
-    if (currentAnimation == ATTACK_RIGHT_2){
+    else if (currentAnimation == ATTACK_RIGHT_2){
         aniSpeed = 10 ;
         g.drawImage(playerAnimations.attackRight2Animations[aniIndex], x - 90 - xOffset, y - 70, null);
     }

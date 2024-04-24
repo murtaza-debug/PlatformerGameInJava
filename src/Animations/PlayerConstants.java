@@ -1,6 +1,6 @@
 package Animations;
 
-public class Constants {
+public class PlayerConstants {
 
     /////// ANIMATIONS//////////
     public static final int IDLE_LEFT = 0 ;
