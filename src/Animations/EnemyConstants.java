@@ -7,4 +7,5 @@ public class EnemyConstants {
     public static final int Dark_Knight = -1 ;
 
 
+
 }

@@ -1,7 +1,5 @@
 package Entities;
 
-import Loader.Load;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -19,6 +17,7 @@ public class DarkKnight extends Enemy {
 
     public void loadImage ()
     {
+
     }
 
     public void update ()
