@@ -1,10 +1,12 @@
 package MAINGAME;
 
 import Entities.Player;
+import Tiles.Tile;
 import Tiles.TileManager;
 import javax.swing.*;
 import java.awt.*;
 import static GameStates.StateConstants.*;
+import static Tiles.TileMap.GetMap;
 
 public class Panel extends JPanel {
 
@@ -16,6 +18,14 @@ public class Panel extends JPanel {
     public final static int TILE_SIZE = (int)(DEFAULT_TILE_SIZE * SCALE);
     public final static int GAME_WIDTH = TILE_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILE_SIZE * TILES_IN_HEIGHT;
+    //// CAMERA //////////
+    public static int xOffset ;
+    public static int yOffset ;
+    public static int leftBorder = (int) ( 0.3 * GAME_HEIGHT) ;
+    public static int rightBorder = (int) ( 0.7 * GAME_HEIGHT) ;
+    public static int maxGameWidth = (GetMap()[0].length - TILES_IN_WIDTH)* TILE_SIZE ;
+    public static int maxGameHeight = (GetMap().length - TILES_IN_HEIGHT) * TILE_SIZE;
+
 
 
     Dimension dimension = new Dimension(GAME_WIDTH,GAME_HEIGHT);
@@ -51,8 +61,32 @@ public class Panel extends JPanel {
     {
         if (currentState == PLAYING)
         {
-            player.update();
             tileManager.update();
+            player.update();
+            checkCloseToBorder ();
+        }
+    }
+
+    private void checkCloseToBorder() {
+        int playerX = player.hitBox.x;
+        int diff = playerX - xOffset;
+
+        if (diff > rightBorder)
+        {
+            xOffset += diff - rightBorder;
+        }
+        else if (diff < leftBorder)
+        {
+            xOffset += diff - leftBorder;
+        }
+
+        if (xOffset > maxGameWidth)
+        {
+            xOffset = maxGameWidth;
+        }
+        else if (xOffset < 0)
+        {
+            xOffset = 0;
         }
     }
 
@@ -67,9 +101,10 @@ public class Panel extends JPanel {
         }
         if (currentState == PLAYING)
         {
-            tileManager.draw(g2d);
-            player.draw(g2d);
+            tileManager.draw(g2d , xOffset);
+            player.draw(g2d , xOffset);
         }
 
     }
+
 }

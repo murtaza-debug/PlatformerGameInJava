@@ -12,20 +12,21 @@ import static MAINGAME.Panel.*;
 import static Tiles.TileConstants.*;
 import static Tiles.propConstants.Grass2;
 
-public class TileManager extends Defaults{
+public class TileManager extends Defaults {
 
-    private int[][] map1 = TileMap.GetMap() ;
+    private int[][] map1 = TileMap.GetMap();
 
     public ArrayList<Tile> tiles = new ArrayList<>();
     public ArrayList<PropAnimations> propAnimations = new ArrayList<>();
+
+
 
     Player player;
 
     BufferedImage[] background1;
     BufferedImage[] background2;
 
-    public TileManager (Player player)
-    {
+    public TileManager(Player player) {
         this.player = player;
         background1 = new BufferedImage[4];
         background2 = new BufferedImage[4];
@@ -42,26 +43,25 @@ public class TileManager extends Defaults{
 
         makeTiles();
     }
+
     @Override
     public void update() {
-        for(int i = 0 ; i < propAnimations.size() ; i++)
+        for (int i = 0; i < propAnimations.size(); i++)
             propAnimations.get(i).update();
+
     }
 
-    public void makeTiles(){
-        for (int x = 0 ; x < map1.length ; x++) {
-            for (int y = 0; y < map1[x].length; y++)
-            {
-                if (map1[x][y] != SKYE && map1[x][y] != Grass2)
-                {
-                    tiles.add(new Tile(y*TILE_SIZE , x*TILE_SIZE, TILE_SIZE, TILE_SIZE));
-                    tiles.getLast().type = map1[x][y] ;
+    public void makeTiles() {
+        for (int x = 0; x < map1.length; x++) {
+            for (int y = 0; y < map1[x].length; y++) {
+                if (map1[x][y] != SKYE && map1[x][y] != Grass2) {
+                    tiles.add(new Tile(y * TILE_SIZE, x * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+                    tiles.getLast().type = map1[x][y];
                 }
-                if (map1[x][y] == Grass2)
-                {
-                    propAnimations.add(new PropAnimations(y * TILE_SIZE  + y - x, x * TILE_SIZE
-                            , TILE_SIZE , TILE_SIZE , Grass2));
-                    propAnimations.getLast().props.type = map1[x][y] ;
+                if (map1[x][y] == Grass2) {
+                    propAnimations.add(new PropAnimations(y * TILE_SIZE + y - x, x * TILE_SIZE
+                            , TILE_SIZE, TILE_SIZE, Grass2));
+                    propAnimations.getLast().props.type = map1[x][y];
                 }
 
             }
@@ -70,18 +70,23 @@ public class TileManager extends Defaults{
     }
 
     @Override
-    public void draw(Graphics2D g) {
-        for (int i = 0; i < background1.length ; i++) {
-            g.drawImage(background1[i] , 0 , 0 , null);
+    public void draw(Graphics2D g , int xOffSet) {
+
+        for (int i = 0; i < background1.length; i++) {
+                g.drawImage(background1[i],0, 0, null);
         }
 
         for (Tile tile : tiles)
-            {tile.draw(g) ;
+        {
+            tile.draw(g , xOffSet);
+        }
 
-        for (PropAnimations propAnimation : propAnimations ) propAnimation.draw(g);
+        for (PropAnimations propAnimation : propAnimations) propAnimation.draw(g , xOffset);
+
+
 
     }
 
 
-
 }
+

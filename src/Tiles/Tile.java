@@ -5,6 +5,7 @@ import Loader.Load;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static MAINGAME.Panel.*;
 import static Tiles.TileConstants.*;
 
 public class Tile {
@@ -37,22 +38,25 @@ public class Tile {
         tileImage[5] = Load.Image("Stone2.png");
         tileImage[6] = Load.Image("Dirt4o.png");
     }
+    public void updateTileHitBox()
+    {
+        hitBox.x = x - xOffset;
+    }
 
-    public void draw(Graphics2D g) {
+    public void draw(Graphics2D g , int xOffset) {
 
         if (type == Dirt1)
-            g.drawImage(tileImage[Dirt1],x,y,null) ;
+            g.drawImage(tileImage[Dirt1],x - xOffset ,y,null) ;
         if (type == Dirt2)
-            g.drawImage(tileImage[Dirt2],x,y,null) ;
+            g.drawImage(tileImage[Dirt2],x - xOffset ,y,null) ;
         if (type == Dirt3)
-            g.drawImage(tileImage[Dirt3],x,y,null) ;
+            g.drawImage(tileImage[Dirt3],x - xOffset ,y,null) ;
         if (type == Stone1)
-            g.drawImage(tileImage[Stone1],x,y,null) ;
+            g.drawImage(tileImage[Stone1],x - xOffset ,y,null) ;
         if (type == Stone2)
-            g.drawImage(tileImage[Stone2],x,y,null) ;
+            g.drawImage(tileImage[Stone2],x - xOffset ,y,null) ;
         if (type == Dirt4)
-            g.drawImage(tileImage[Dirt4],x,y,null) ;
-
+            g.drawImage(tileImage[Dirt4],x - xOffset ,y,null) ;
 
     }
 }

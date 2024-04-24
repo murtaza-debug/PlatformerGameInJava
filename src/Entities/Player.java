@@ -210,39 +210,38 @@ public void update() {
 
 
 
-public void draw(Graphics2D g) {
+public void draw(Graphics2D g , int xOffset) {
     g.setColor(Color.white);
-
-
+    
     if (currentAnimation == IDLE_RIGHT) {
-        g.drawImage(playerAnimations.idleRightAnimations[aniIndex], x - 80, y - 70, null);
+        g.drawImage(playerAnimations.idleRightAnimations[aniIndex], x - 80 - xOffset, y - 70, null);
     }
     if (currentAnimation == IDLE_LEFT) {
-        g.drawImage(playerAnimations.idleLeftAnimations[aniIndex], x-90, y - 70, null);
+        g.drawImage(playerAnimations.idleLeftAnimations[aniIndex], x -90 - xOffset, y - 70, null);
     }
     if (currentAnimation == RUNNING_RIGHT) {
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.runningRightAnimations[aniIndex], x - 80, y - 70,null);
+        g.drawImage(playerAnimations.runningRightAnimations[aniIndex], x - 80 - xOffset, y - 70,null);
     }
     if (currentAnimation == RUNNING_LEFT) {
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.runningLeftAnimations[aniIndex], x - 90, y - 70, null);
+        g.drawImage(playerAnimations.runningLeftAnimations[aniIndex], x - 90 - xOffset , y - 70, null);
     }
     if (currentAnimation == ATTACK_LEFT_1){
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackLeft1Animations[aniIndex], x - 80, y - 70, null);
+        g.drawImage(playerAnimations.attackLeft1Animations[aniIndex], x - 80 - xOffset , y - 70, null);
     }
     if (currentAnimation == ATTACK_RIGHT_1){
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackRight1Animations[aniIndex], x - 90, y - 70, null);
+        g.drawImage(playerAnimations.attackRight1Animations[aniIndex], x - 90 - xOffset , y - 70, null);
     }
     if (currentAnimation == ATTACK_LEFT_2){
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackLeft2Animations[aniIndex], x - 80, y - 70 , null);
+        g.drawImage(playerAnimations.attackLeft2Animations[aniIndex], x - 80 - xOffset , y - 70 , null);
     }
     if (currentAnimation == ATTACK_RIGHT_2){
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackRight2Animations[aniIndex], x - 90, y - 70, null);
+        g.drawImage(playerAnimations.attackRight2Animations[aniIndex], x - 90 - xOffset, y - 70, null);
     }
 }
 
