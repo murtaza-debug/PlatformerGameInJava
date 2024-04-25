@@ -34,12 +34,10 @@ public class PlayerAnimations {
     public BufferedImage [] attackLeft2Animations ;
     public BufferedImage [] attackRight2Animations ;
 
-    Player player;
     int width = 200 ;
 
-    public PlayerAnimations(Player player)
+    public PlayerAnimations()
     {
-        this.player = player;
 
         loadImages();
 

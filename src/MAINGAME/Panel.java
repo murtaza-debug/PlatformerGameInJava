@@ -1,6 +1,7 @@
 package MAINGAME;
 
 import Entities.DarkKnight;
+import Entities.EnemyManager;
 import Entities.Player;
 import Tiles.Tile;
 import Tiles.TileManager;
@@ -36,7 +37,7 @@ public class Panel extends JPanel {
     TileManager tileManager ;
 
     ////// ENEMIES ///////
-    DarkKnight darkKnight ;
+    EnemyManager enemyManager ;
 
     /// GAME STATES  ////
     MenuPanel menuPanel;
@@ -47,7 +48,7 @@ public class Panel extends JPanel {
         player = new Player();
         tileManager = new TileManager(player) ;
         menuPanel = new MenuPanel(player.getKeyboard()) ;
-        darkKnight = new DarkKnight(100,100,64,64);
+        enemyManager = new EnemyManager(this , tileManager , xOffset);
         setBackground(Color.BLACK);
         addKeyListener(player.getKeyboard());
         addMouseListener(menuPanel.mouse);
@@ -68,6 +69,7 @@ public class Panel extends JPanel {
         {
             tileManager.update();
             player.update();
+            enemyManager.update(xOffset);
             checkCloseToBorder ();
         }
     }
@@ -107,8 +109,9 @@ public class Panel extends JPanel {
         if (currentState == PLAYING)
         {
             tileManager.draw(g2d , xOffset);
-            darkKnight.draw(g2d);
+
             player.draw(g2d , xOffset);
+            enemyManager.draw(g2d , xOffset);
         }
 
     }

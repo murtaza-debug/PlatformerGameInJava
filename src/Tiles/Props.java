@@ -34,7 +34,6 @@ public class Props {
             else {
                 propImage[i] = Load.Image("Vegetation/Grass2/Grass2_000" + i + ".png");
             }
-            System.out.println("index : " + i);
         }
     }
 

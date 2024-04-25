@@ -27,7 +27,7 @@ public class Player {
     ///////// animations //////////
     PlayerAnimations playerAnimations;
 
-    int aniTick , aniIndex , aniSpeed = 15;
+    private int aniTick , aniIndex , aniSpeed = 15;
 
     public int currentAnimation = IDLE_RIGHT ;
 
@@ -49,7 +49,7 @@ public class Player {
     //////// CONSTRUCTOR /////////
     public Player ()
     {
-        playerAnimations = new PlayerAnimations(this);
+        playerAnimations = new PlayerAnimations();
         keyboard = new Keyboard(this) ;
         hitBox = new Rectangle(x , y,width - 170 ,height - 154);
         tileManager = new TileManager(this);
@@ -104,10 +104,9 @@ protected void updateAnimationTick()
     {
         aniTick = 0;
         aniIndex++;
-        if (aniIndex >= GetTotalImages(currentAnimation) - 1 )
+        if (aniIndex >= GetTotalImages(currentAnimation) - 1)
         {
             aniIndex = 0;
-            currentAnimation = IDLE_RIGHT ;
         }
     }
 }
@@ -181,7 +180,6 @@ private void updatePosition ()
             hitBox.y -= (int) Math.signum(ySpeed);
             ySpeed = 0;
             y = hitBox.y;
-
         }
     }
 

@@ -35,7 +35,6 @@ public class Keyboard implements KeyListener {
             switch (e.getKeyCode())
             {
                 case KeyEvent.VK_SPACE :
-                    System.out.println("W");
                     Space = true ;
                     break;
                 case KeyEvent.VK_F :
