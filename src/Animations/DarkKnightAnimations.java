@@ -72,6 +72,11 @@ public class DarkKnightAnimations {
         for (int i = 0; i < GetTotalImages(RUNNING_RIGHT); i++) {
             runRight[i] = runImageRight.getSubimage(i * 80 , 0 , 80 , 64 );
         }
+        index = 0 ;
+        for (int i = GetTotalImages(RUNNING_LEFT) - 1; i >= 0 ; i--) {
+            idleLeft[index] = idleImageLeft.getSubimage(i * 80, 0  , 80 , 64 );
+            index ++ ;
+        }
     }
 
 

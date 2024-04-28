@@ -38,13 +38,13 @@ public class Tile {
         tileImage[5] = Load.Image("Stone2.png");
         tileImage[6] = Load.Image("Dirt4o.png");
     }
-    public void updateTileHitBox()
+    public void updateTileHitBox(int xOffset)
     {
-        hitBox.x = x - xOffset;
+        hitBox.x = x - xOffset ;
     }
 
     public void draw(Graphics2D g , int xOffset) {
-
+/*
         if (type == Dirt1)
             g.drawImage(tileImage[Dirt1],x - xOffset ,y,null) ;
         if (type == Dirt2)
@@ -56,7 +56,10 @@ public class Tile {
         if (type == Stone2)
             g.drawImage(tileImage[Stone2],x - xOffset ,y,null) ;
         if (type == Dirt4)
-            g.drawImage(tileImage[Dirt4],x - xOffset ,y,null) ;
+            g.drawImage(tileImage[Dirt4],x - xOffset ,y,null) ;*/
+
+        g.setColor(Color.black);
+        g.drawRect(hitBox.x - xOffset,hitBox.y,width,height) ;
 
     }
 }

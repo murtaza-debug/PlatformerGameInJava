@@ -1,31 +1,34 @@
 package Entities;
 
+import AI.PathFinder;
 import MAINGAME.Panel;
 import Tiles.TileManager;
 
 import java.awt.*;
 
 import static MAINGAME.Panel.TILE_SIZE;
+import static MAINGAME.Panel.xOffset;
 
 public class EnemyManager {
 
     Panel panel ;
-    DarkKnight darkKnight ;
-    public EnemyManager(Panel panel , TileManager tileManager , int xOffset)
+    TileManager tileManager ;
+    Ball ball;
+    public EnemyManager(Panel panel , TileManager tileManager, Player player , PathFinder pathFinder)
     {
         this.panel = panel;
-        darkKnight = new DarkKnight(3 * TILE_SIZE,9 *TILE_SIZE,64,64 , tileManager ,xOffset);
+        this.tileManager = tileManager;
+        ball = new Ball(100,200,20 , player , tileManager , pathFinder);
     }
 
 
     public void update (int xOffset)
     {
-        darkKnight.update(xOffset);
-
+        ball.update(xOffset);
     }
 
     public void draw (Graphics2D g , int xOffset)
     {
-        darkKnight.draw(g,xOffset);
+        ball.draw(g , xOffset);
     }
 }

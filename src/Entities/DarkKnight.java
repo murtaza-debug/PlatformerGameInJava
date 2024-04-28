@@ -6,29 +6,66 @@ import Tiles.Tile;
 import Tiles.TileManager;
 
 import java.awt.*;
+import java.util.Random;
 
 import static Animations.DarkKnightConstants.*;
+import static MAINGAME.Panel.maxGameWidth;
 
 public class DarkKnight extends Enemy {
+
+    //// MOVEMENT AND HIT_BOX //////
+    double xSpeed, ySpeed = 0 , maxSpeed = 6;
+    float gravity = 0.2F;
+    int direction = RIGHT;
+    boolean firstUpdate = true;
+    int enemyState = RUNNING_RIGHT ;
+    boolean jumping ;
 
     /////// ANIMATION /////////
     private int aniTick  , aniIndex , aniSpeed = 15 ;
     DarkKnightAnimations animations ;
     TileManager tileManager ;
-    int currentAnimation = RUNNING_RIGHT;
+    int currentAnimation = enemyState;
+    int actionCounter = 0 ;
 
-    //// MOVEMENT AND HIT_BOX //////
-    double xSpeed, ySpeed , maxSpeed = 6;
-    int direction = RIGHT;
-    boolean firstUpdate = true;
-    int enemyState = RUNNING_RIGHT ;
-    boolean jumping ;
+
 
     public DarkKnight(int x, int y , int width, int height , TileManager tileManager , int xOffset) {
         super(x,y,width,height);
         updateHitBox(xOffset);
         this.tileManager = tileManager;
         animations = new DarkKnightAnimations();
+    }
+
+    //// MOVEMENT /////////
+    private void setAction ()
+    {
+        actionCounter++;
+        if (actionCounter >= 100 ) {
+            Random random = new Random();
+
+            int i = random.nextInt(1000) + 1;
+            System.out.println(i);
+            if (i <= 250) {
+                direction = RIGHT;
+                currentAnimation = RUNNING_RIGHT;
+            }
+            if (i <= 500 && i > 250 ) {
+                direction = LEFT;
+                currentAnimation = RUNNING_LEFT;
+            }
+            if (i <= 1000 && i > 500) {
+                if (direction == LEFT) {
+                    currentAnimation = IDLE_RIGHT;
+                }
+                if (direction == RIGHT) {
+                    currentAnimation = IDLE_LEFT;
+                }
+            }
+            aniIndex = 0 ;
+            System.out.println(currentAnimation);
+            actionCounter = 0;
+        }
     }
 
      //////// ANIMATION //////////
@@ -54,38 +91,22 @@ public class DarkKnight extends Enemy {
     }
 
     private void updatePosition (int xOffset) {
-        /*if (firstUpdate) {
-            hitBox.y += ySpeed;
-            for (Tile tile : tileManager.tiles) {
-                if (tile.hitBox.intersects(hitBox)) {
-                    hitBox.y -= ySpeed;
-                    while (!tile.hitBox.intersects(hitBox)) {
-                        hitBox.y += (int) Math.signum(ySpeed);
-                    }
-                    hitBox.y -= (int) Math.signum(ySpeed);
-                    ySpeed = 0;
-                    y = hitBox.y;
-                    firstUpdate = false;
-                }
-            }
-            if (firstUpdate) ;
-            //y += 0.2 ;
-        }*/
 
-        switch (enemyState)
-        {
-            case IDLE_RIGHT:
-                enemyState = RUNNING_RIGHT ;
-                break;
-            case RUNNING_RIGHT:
-                float runSpeed = 0 ;
-                if (direction == RIGHT)
-                    xSpeed = runSpeed ;
-                else
-                    xSpeed = -runSpeed ;
+        xSpeed = 0 ;
 
-                break;
-
+        if (direction == RIGHT && currentAnimation == RUNNING_RIGHT) {
+            xSpeed = 3 ;
+        }
+        if (direction == LEFT && currentAnimation == RUNNING_LEFT) {
+            xSpeed = -3 ;
+        }
+        if (x + xSpeed < 0) {
+            xSpeed = 0;
+            direction = RIGHT;
+        }
+        if (x - xSpeed > 1280) {
+            xSpeed = 0;
+            direction = LEFT;
         }
 
         x += xSpeed ;
@@ -97,7 +118,7 @@ public class DarkKnight extends Enemy {
         hitBox.x = (int) (x + 30 - xOffset);
         hitBox.y = (int) (y + 30);
         hitBox.width = (int) (width - 30);
-        hitBox.height = (int) (height - 30);
+        hitBox.height = (int) (height - 33);
     }
 
     ////// UPDATE AND DRAW /////////
@@ -105,6 +126,7 @@ public class DarkKnight extends Enemy {
     {
         updateAnimationTick();
         updateAnimations();
+        setAction();
         updatePosition(xOffset);
     }
 
@@ -118,11 +140,13 @@ public class DarkKnight extends Enemy {
             if (currentAnimation == RUNNING_RIGHT)
                 g.drawImage( animations.runRight[aniIndex], (int)(x - xOffset),(int) y, null);
         }
-
-        if (direction == LEFT)
+        else
         {
             if (currentAnimation == IDLE_LEFT)
                 g.drawImage(animations.idleLeft[aniIndex] , (int)(x - xOffset),(int) y, null);
+
+            if (currentAnimation == RUNNING_LEFT)
+                g.drawImage(animations.runLeft[aniIndex], (int)(x - xOffset),(int) y, null);
         }
 
 

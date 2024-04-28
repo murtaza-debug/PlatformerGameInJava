@@ -1,10 +1,6 @@
 package MAINGAME;
 
 import javax.swing.*;
-import java.awt.*;
-
-import static MAINGAME.Panel.GAME_HEIGHT;
-import static MAINGAME.Panel.GAME_WIDTH;
 
 public class Frame extends JFrame {
 
@@ -15,7 +11,7 @@ public class Frame extends JFrame {
         panel = new Panel(game) ;
         add(panel);
 
-        addKeyListener(panel.player.getKeyboard());
+        addKeyListener(panel.player1.getKeyboard());
         addMouseListener(panel.menuPanel.mouse);
         addMouseMotionListener(panel.menuPanel.mouse);
 

@@ -18,7 +18,7 @@ public class Player {
     public int y = 64;
     int width = TILE_SIZE + 144;
     int height = TILE_SIZE + 144;
-    double maxSpeed = 5 ;
+    double maxSpeed = 3.5 ;
     public double xSpeed  = 0;
     public double ySpeed = 0;
 
@@ -47,12 +47,12 @@ public class Player {
     public boolean isMoving = false ;
 
     //////// CONSTRUCTOR /////////
-    public Player ()
+    public Player (TileManager tileManager )
     {
         playerAnimations = new PlayerAnimations();
         keyboard = new Keyboard(this) ;
-        hitBox = new Rectangle(x , y,width - 170 ,height - 154);
-        tileManager = new TileManager(this);
+        hitBox = new Rectangle(x , y + 5,width - 180 ,height - 154);
+        this.tileManager = tileManager ;
     }
 
     /////// ANIMATIONS ////////
@@ -137,14 +137,14 @@ private void updatePosition ()
     if (xSpeed < 0 && xSpeed > -0.75) xSpeed = 0;
 
     if (xSpeed > maxSpeed) xSpeed = maxSpeed;
-    if (xSpeed < -maxSpeed) xSpeed = -maxSpeed;
+    if (xSpeed <= -maxSpeed) xSpeed = -maxSpeed;
 
     /////// JUMPING ////////
     if (keyboard.Space)
     {
         hitBox.y ++ ;
         for(Tile tile : tileManager.tiles) {
-            if (tile.hitBox.intersects(hitBox)) ySpeed = -7.4;
+            if (tile.hitBox.intersects(hitBox)) ySpeed = -7;
         }
         hitBox.y --;
     }
@@ -182,18 +182,19 @@ private void updatePosition ()
             y = hitBox.y;
         }
     }
-
+    System.out.println("x : " + x + " xSpeed : " + xSpeed );
     x += xSpeed ;
     y += ySpeed ;
-    hitBox.x = x;
+    if (direction == LEFT)  hitBox.x = x;
+    if (direction == RIGHT) hitBox.x = x;
     hitBox.y = y;
 }
 
 
-public void drawHitBox (Graphics g)
+public void drawHitBox (Graphics g , int xOffset)
 {
     g.setColor(Color.RED);
-    g.drawRect(hitBox.x,hitBox.y,hitBox.width,hitBox.height);
+    g.drawRect(hitBox.x - xOffset,hitBox.y,hitBox.width,hitBox.height);
 }
 
 
@@ -213,9 +214,11 @@ public void draw(Graphics2D g , int xOffset) {
     
     if (currentAnimation == IDLE_RIGHT) {
         g.drawImage(playerAnimations.idleRightAnimations[aniIndex], x - 80 - xOffset, y - 70, null);
+        aniSpeed = 15 ;
     }
     else if (currentAnimation == IDLE_LEFT) {
         g.drawImage(playerAnimations.idleLeftAnimations[aniIndex], x -90 - xOffset, y - 70, null);
+        aniSpeed = 15;
     }
     if (currentAnimation == RUNNING_RIGHT) {
         aniSpeed = 10 ;
@@ -241,6 +244,7 @@ public void draw(Graphics2D g , int xOffset) {
         aniSpeed = 10 ;
         g.drawImage(playerAnimations.attackRight2Animations[aniIndex], x - 90 - xOffset, y - 70, null);
     }
+    drawHitBox(g , xOffset);
 }
 
 //// GETTERS AND SETTERS ////////

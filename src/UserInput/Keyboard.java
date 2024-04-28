@@ -12,10 +12,11 @@ import static GameStates.StateConstants.PLAYING;
 public class Keyboard implements KeyListener {
 
     public boolean Space, Attack1 , Attack2 , Left , Right ;
-    Player player;
-    public Keyboard (Player player)
+    Player player1;
+
+    public Keyboard (Player player1)
     {
-        this.player = player ;
+        this.player1 = player1 ;
     }
     @Override
     public void keyTyped(KeyEvent e) {
@@ -49,6 +50,8 @@ public class Keyboard implements KeyListener {
                 case KeyEvent.VK_D :
                     Right = true ;
                     break;
+
+
             }
 
     }
@@ -73,7 +76,6 @@ public class Keyboard implements KeyListener {
             case KeyEvent.VK_D :
                 Right = false ;
                 break;
-
         }
     }
 

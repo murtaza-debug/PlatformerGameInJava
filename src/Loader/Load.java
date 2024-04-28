@@ -14,7 +14,6 @@ public class Load {
         BufferedImage image ;
 
         try {
-            System.out.println(2);
             image = ImageIO.read(is);
         } catch (IOException e) {
             throw new RuntimeException(e);

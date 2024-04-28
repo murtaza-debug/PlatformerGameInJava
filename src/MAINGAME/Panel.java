@@ -1,9 +1,8 @@
 package MAINGAME;
 
-import Entities.DarkKnight;
+import AI.PathFinder;
 import Entities.EnemyManager;
 import Entities.Player;
-import Tiles.Tile;
 import Tiles.TileManager;
 import javax.swing.*;
 import java.awt.*;
@@ -25,16 +24,17 @@ public class Panel extends JPanel {
     public static int yOffset ;
     public static int leftBorder = (int) ( 0.5 * GAME_WIDTH) ;
     public static int rightBorder = (int) ( 0.6 * GAME_WIDTH) ;
-    public static int maxGameWidth = (GetMap()[0].length - TILES_IN_WIDTH)* TILE_SIZE ;
-    public static int maxGameHeight = (GetMap().length - TILES_IN_HEIGHT) * TILE_SIZE;
+    public static final int maxGameWidth = (200 - 20)* TILE_SIZE ;
+    public static int maxGameHeight = (12) * TILE_SIZE;
 
 
 
     Dimension dimension = new Dimension(GAME_WIDTH,GAME_HEIGHT);
 
     //// ENTITIES AND MAPS //////
-    Player player ;
-    TileManager tileManager ;
+    Player player1;
+    public TileManager tileManager ;
+    PathFinder pathFinder;
 
     ////// ENEMIES ///////
     EnemyManager enemyManager ;
@@ -45,12 +45,14 @@ public class Panel extends JPanel {
     /// constructor /////
     Panel (Game game)
     {
-        player = new Player();
-        tileManager = new TileManager(player) ;
-        menuPanel = new MenuPanel(player.getKeyboard()) ;
-        enemyManager = new EnemyManager(this , tileManager , xOffset);
+
+        tileManager = new TileManager() ;
+        player1 = new Player(tileManager);
+        menuPanel = new MenuPanel(player1.getKeyboard()) ;
+        pathFinder = new PathFinder(this);
+        enemyManager = new EnemyManager(this , tileManager , player1 , pathFinder);
         setBackground(Color.BLACK);
-        addKeyListener(player.getKeyboard());
+        addKeyListener(player1.getKeyboard());
         addMouseListener(menuPanel.mouse);
         addMouseMotionListener(menuPanel.mouse);
         setAllSize();
@@ -67,15 +69,15 @@ public class Panel extends JPanel {
     {
         if (currentState == PLAYING)
         {
-            tileManager.update();
-            player.update();
-            enemyManager.update(xOffset);
             checkCloseToBorder ();
+            tileManager.update(xOffset);
+            player1.update();
+            enemyManager.update(xOffset);
         }
     }
 
     private void checkCloseToBorder() {
-        int playerX = player.hitBox.x;
+        int playerX = player1.hitBox.x;
         int diff = playerX - xOffset;
 
         if (diff > rightBorder)
@@ -110,7 +112,7 @@ public class Panel extends JPanel {
         {
             tileManager.draw(g2d , xOffset);
 
-            player.draw(g2d , xOffset);
+            player1.draw(g2d , xOffset);
             enemyManager.draw(g2d , xOffset);
         }
 
