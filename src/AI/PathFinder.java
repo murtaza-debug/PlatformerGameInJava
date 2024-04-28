@@ -2,9 +2,9 @@ package AI;
 
 import java.util.ArrayList;
 
-import static MAINGAME.Panel.maxGameHeight;
-import static MAINGAME.Panel.maxGameWidth;
 import MAINGAME.Panel;
+
+import static MAINGAME.Panel.*;
 
 public class PathFinder {
 
@@ -22,15 +22,15 @@ public class PathFinder {
     }
     public void initNode ()
     {
-        node = new Node [maxGameWidth] [maxGameHeight];
+        node = new Node [maxGameWidth / TILE_SIZE] [maxGameHeight / TILE_SIZE];
 
         int col = 0 ;
         int row = 0 ;
-        while (col < maxGameWidth && row < maxGameHeight)
+        while (col < node.length && row < node[0].length)
         {
             node[col][row] = new Node(col, row);
             col++;
-            if (col == maxGameWidth)
+            if (col == node.length)
             {
                 col = 0;
                 row++;
@@ -42,7 +42,7 @@ public class PathFinder {
     {
         int col = 0 ;
         int row = 0 ;
-        while (col < maxGameWidth && row < maxGameHeight)
+        while (col < node.length && row < node[0].length)
         {
             node [col][row].open = false ;
             node [col] [row].checked = false ;
@@ -65,6 +65,7 @@ public class PathFinder {
 
     public void setNode (int startCol , int startRow , int goalCol , int goalRow)
     {
+        System.out.println("Start col : " + startCol+ " Start Row : " + startRow + " goal col : " + goalCol + " goal row : " + goalRow);
         resetNode();
         startNode = node[startCol] [startRow] ;
         currentNode = startNode ;
@@ -74,8 +75,9 @@ public class PathFinder {
 
         int col = 0 ;
         int row = 0 ;
-        while (col < maxGameWidth && row < maxGameHeight)
+        while (row < node.length && col < node[0].length)
         {
+            System.out.println("Col : " + col + " Row : " + row);
             /// SET SOLID NODE //////
             int tileNumber = panel.tileManager.map1 [col][row] ;
 
@@ -117,12 +119,13 @@ public class PathFinder {
             int col = currentNode.col;
             int row = currentNode.row;
 
+            System.out.println("col : " + col + " row : " + row);
             /// check status
             currentNode.checked = true ;
             openList.remove(currentNode);
 
             /// open  the RIGHTNode
-            if (col + 1 < maxGameWidth)
+            if (col + 1 < maxGameWidth / TILE_SIZE)
             {
                 openNode(node[col + 1][row] ) ;
             }

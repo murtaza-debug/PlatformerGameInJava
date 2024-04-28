@@ -18,7 +18,7 @@ public class EnemyManager {
     {
         this.panel = panel;
         this.tileManager = tileManager;
-        ball = new Ball(100,200,20 , player , tileManager , pathFinder);
+        ball = new Ball(10,64,20 , player , tileManager , pathFinder);
     }
 
 
