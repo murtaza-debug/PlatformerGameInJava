@@ -9,6 +9,8 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import static MAINGAME.Panel.TILE_SIZE;
+
 public class Ball {
 
     int x;
@@ -43,58 +45,20 @@ public class Ball {
         double xDistance = player.hitBox.x - x;
         double yDistance = player.hitBox.y - y;
 
-        // Check if player is in line of sight
-        boolean inLineOfSight = checkLineOfSight();
+        // Move towards the player
+        double tempXSpeed = (xDistance > 0) ? speed : (xDistance < 0) ? -speed : 0;
+        double tempYSpeed = (yDistance > 0) ? speed : (yDistance < 0) ? -speed : 0;
 
-        // If player is in line of sight, update player path
-        if (inLineOfSight) {
-            playerPath.add(new Point((player.hitBox.x + player.hitBox.width)/2,
-                                    (player.hitBox.y + player.hitBox.height )/2));
-        }
+        // Update ball's position
+        x += tempXSpeed;
+        y += tempYSpeed;
 
-        // Adjust movement based on line of sight
-        if (inLineOfSight || playerPath.size() > 1) {
-            Point target;
-            if (inLineOfSight) {
-                target = new Point((player.hitBox.x + player.hitBox.width)/2,
-                                (player.hitBox.y + player.hitBox.height )/2);
-            } else {
-                target = playerPath.get(playerPath.size() - 1);
-            }
-
-            // Move towards target position
-            xSpeed = (target.x - x > 0) ? speed : (target.x - x < 0) ? -speed : 0;
-            ySpeed = (target.y - y > 0) ? speed : (target.y - y < 0) ? -speed : 0;
-
-            // Adjust movement based on tile collisions
-            for (Tile tile : tileManager.tiles) {
-                if (tile.hitBox.intersects(hitBox)) {
-                    // Adjust x and y speed to continue chasing player after collision
-                    if (xSpeed > 0) {
-                        xSpeed = speed;
-                    } else if (xSpeed < 0) {
-                        xSpeed = -speed;
-                    }
-
-                    if (ySpeed > 0) {
-                        ySpeed = speed;
-                    } else if (ySpeed < 0) {
-                        ySpeed = -speed;
-                    }
-                }
-            }
-
-            // Update position
-            x += xSpeed;
-            y += ySpeed;
-            hitBox.x = (int) x;
-            hitBox.y = (int) y;
-        }
-
-        // Update line of sight
-        updateLineOfSight(x - xOffset, y, player.hitBox.x - xOffset, player.hitBox.y + 15);
+        // Update hitbox position
+        hitBox.x = (int) x;
+        hitBox.y = (int) y;
     }
 
+    
     public void draw(Graphics2D g, int xOffset) {
         g.setColor(Color.black);
         g.fillOval(x - xOffset, y, 2 * radius, 2 * radius);
@@ -111,9 +75,13 @@ public class Ball {
     private boolean checkLineOfSight() {
         // Implementation of line of sight check
         for (Tile tile : tileManager.tiles)
-            if (lineOfSight.intersects(tile.hitBox)) return false ;
-        // Return true if the player is in line of sight, false otherwise
-        return true; // Placeholder, replace with actual implementation
+            if (lineOfSight.intersects(tile.hitBox)) return false;
+
+        // Check if line of sight intersects with player's hitbox
+        if (lineOfSight.intersects(player.hitBox))
+            return true; // Player is in line of sight
+
+        return false; // Player is not in line of sight
     }
 
     private void updateLineOfSight(int x1, int y1, int x2, int y2) {
