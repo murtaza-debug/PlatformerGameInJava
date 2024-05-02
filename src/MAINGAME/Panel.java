@@ -34,7 +34,6 @@ public class Panel extends JPanel {
     //// ENTITIES AND MAPS //////
     Player player1;
     public TileManager tileManager ;
-    PathFinder pathFinder;
 
     ////// ENEMIES ///////
     EnemyManager enemyManager ;
@@ -49,8 +48,7 @@ public class Panel extends JPanel {
         tileManager = new TileManager() ;
         player1 = new Player(tileManager);
         menuPanel = new MenuPanel(player1.getKeyboard()) ;
-        pathFinder = new PathFinder(this);
-        enemyManager = new EnemyManager(this , tileManager , player1 , pathFinder);
+        enemyManager = new EnemyManager(this , tileManager , player1);
         setBackground(Color.BLACK);
         addKeyListener(player1.getKeyboard());
         addMouseListener(menuPanel.mouse);
@@ -71,7 +69,7 @@ public class Panel extends JPanel {
         {
             checkCloseToBorder ();
             tileManager.update(xOffset);
-            player1.update();
+            player1.update(xOffset);
             enemyManager.update(xOffset);
         }
     }

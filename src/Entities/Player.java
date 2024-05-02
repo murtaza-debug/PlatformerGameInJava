@@ -21,7 +21,7 @@ public class Player {
     double maxSpeed = 3.5 ;
     public double xSpeed  = 0;
     public double ySpeed = 0;
-
+    Rectangle hitRadius;
     public int direction;
 
     ///////// animations //////////
@@ -52,6 +52,7 @@ public class Player {
         playerAnimations = new PlayerAnimations();
         keyboard = new Keyboard(this) ;
         hitBox = new Rectangle(x , y + 5,width - 180 ,height - 154);
+        this.hitRadius = new Rectangle(x + 30 , y + 5 ,width - 180 ,height - 154 );
         this.tileManager = tileManager ;
     }
 
@@ -81,9 +82,11 @@ public class Player {
                 currentAnimation = IDLE_RIGHT ;
         }
         if (direction == RIGHT && keyboard.Attack1 && !keyboard.Attack2) {
-            currentAnimation = ATTACK_RIGHT_1;
+            if (currentAnimation == ATTACK_RIGHT_1 ) aniIndex = 0;
+            currentAnimation = ATTACK_RIGHT_1 ;
         }
         if (direction == LEFT && keyboard.Attack1 && !keyboard.Attack2){
+            if (currentAnimation == ATTACK_LEFT_1 ) aniIndex = 0;
             currentAnimation = ATTACK_LEFT_1 ;
         }
         /*if (direction == RIGHT && keyboard.Attack2 && !keyboard.Attack1)
@@ -114,7 +117,7 @@ protected void updateAnimationTick()
 
 /////// INPUTS //////
 
-private void updatePosition ()
+private void updatePosition (int xOffset)
 {
     /// moving left and right //////
     isMoving = false ;
@@ -182,11 +185,12 @@ private void updatePosition ()
             y = hitBox.y;
         }
     }
+    if (attacking(xOffset)) xSpeed = 0;
     System.out.println("x : " + x + " xSpeed : " + xSpeed );
     x += xSpeed ;
     y += ySpeed ;
-    if (direction == LEFT)  hitBox.x = x;
-    if (direction == RIGHT) hitBox.x = x;
+    if (direction == LEFT)  hitBox.x = x ;
+    if (direction == RIGHT) hitBox.x = x ;
     hitBox.y = y;
 }
 
@@ -201,10 +205,10 @@ public void drawHitBox (Graphics g , int xOffset)
 ////// UPDATE AND DRAW /////
 
 
-public void update() {
+public void update(int xOffset) {
     updateAnimation();
     updateAnimationTick();
-    updatePosition();
+    updatePosition(xOffset);
 }
 
 
@@ -245,11 +249,32 @@ public void draw(Graphics2D g , int xOffset) {
         g.drawImage(playerAnimations.attackRight2Animations[aniIndex], x - 90 - xOffset, y - 70, null);
     }
     drawHitBox(g , xOffset);
+    g.drawRect(hitRadius.x - 2*xOffset, hitRadius.y, hitRadius.width, hitRadius.height);
 }
 
 //// GETTERS AND SETTERS ////////
     public Keyboard getKeyboard() {
     return this.keyboard;
+    }
+    private boolean attacking(int xOffset)
+    {
+        if (keyboard.Attack1) {
+            if (direction == RIGHT) {
+                hitRadius.x = x + 30 - xOffset;
+                hitRadius.y = y;
+                hitRadius.width = width - 180;
+                hitRadius.height = height - 154 ;
+            }
+            if (direction == LEFT) {
+                hitRadius.x = x - 30 - xOffset;
+                hitRadius.y = y;
+                hitRadius.width = width - 180;
+                hitRadius.height = height - 154;
+            }
+                return true ;
+        }
+        return false ;
+
     }
 }
 
