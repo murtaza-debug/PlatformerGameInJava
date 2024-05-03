@@ -1,51 +1,63 @@
 package Entities;
 
-import AI.PathFinder;
+import Loader.Load;
 import MAINGAME.Panel;
+import Tiles.Tile;
 import Tiles.TileManager;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static MAINGAME.Panel.TILE_SIZE;
-import static MAINGAME.Panel.xOffset;
 
 public class EnemyManager {
 
     Panel panel ;
     TileManager tileManager ;
-    Ball ball;
+    FireSkull ball;
     ArrayList<Trap> traps = new ArrayList<>();
     Player player;
+    BufferedImage enemyMap;
     public EnemyManager(Panel panel , TileManager tileManager, Player player)
     {
+        enemyMap = Load.Image("EnemyMap.png");
         this.panel = panel;
         this.tileManager = tileManager;
-        ball = new Ball(10,64,20 , player , tileManager);
+        ball = new FireSkull(-100,64,20 , player , tileManager);
         this.player = player;
         addTraps();
 
     }
 
     private void addTraps() {
-        traps.add(new VerticalBall(2*TILE_SIZE , 10 * TILE_SIZE , 20 , 20,player , tileManager));
-        traps.add(new VerticalBall(8*TILE_SIZE , 10 * TILE_SIZE , 20 , 20,player , tileManager));
-        traps.add(new VerticalBall(9*TILE_SIZE , 10 * TILE_SIZE , 20 , 20,player , tileManager));
-        traps.add(new VerticalBall(10*TILE_SIZE , 10 * TILE_SIZE , 20 , 20,player , tileManager));
-        traps.add(new VerticalBall(45*TILE_SIZE , 10 * TILE_SIZE , 20 , 20,player , tileManager));
-        traps.add(new VerticalBall(40*TILE_SIZE , 10 * TILE_SIZE , 20 , 20,player , tileManager));
+        int k = 0;
+        Color color ;
+        for (int i = 0 ; i < 12; i++) {
+            for (int j = 0 ; j < 200; j++) {
+                color = new Color(enemyMap.getRGB((j* TILE_SIZE +  (j+1)*TILE_SIZE ) / 2,(i * TILE_SIZE +  (i+1)*TILE_SIZE ) / 2) );
+                if ((color.getRed() == 70 & color.getBlue() == 70 && color.getGreen() == 70)) {
+                    k++;
+                    traps.add(new VerticalBall(j*TILE_SIZE,i*TILE_SIZE, TILE_SIZE , TILE_SIZE , player , tileManager));
+                }
+                if (color.getRed() == 200 & color.getBlue() == 100 && color.getGreen() == 100) {
+                    traps.add(new HorizontalBall(j*TILE_SIZE,i*TILE_SIZE, TILE_SIZE , TILE_SIZE , player , tileManager));
+                }
+            }
+        }
     }
 
 
     public void update (int xOffset)
     {
         ball.update(xOffset);
-        traps.getFirst().update(xOffset);
+        for (Trap trap : traps ) trap.update(xOffset);
     }
 
     public void draw (Graphics2D g , int xOffset)
     {
         ball.draw(g , xOffset);
-        traps.getFirst().draw(g , xOffset);
+
+        for (Trap trap : traps ) trap.draw(g , xOffset);
     }
 }

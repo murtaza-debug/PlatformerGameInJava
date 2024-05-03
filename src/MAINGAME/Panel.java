@@ -1,13 +1,14 @@
 package MAINGAME;
 
-import AI.PathFinder;
 import Entities.EnemyManager;
 import Entities.Player;
+import Loader.Load;
 import Tiles.TileManager;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
 import static GameStates.StateConstants.*;
-import static Tiles.TileMap.GetMap;
 
 public class Panel extends JPanel {
 
@@ -24,7 +25,7 @@ public class Panel extends JPanel {
     public static int yOffset ;
     public static int leftBorder = (int) ( 0.5 * GAME_WIDTH) ;
     public static int rightBorder = (int) ( 0.6 * GAME_WIDTH) ;
-    public static final int maxGameWidth = (200 - 20)* TILE_SIZE ;
+    public static final int maxGameWidth = (200 )* TILE_SIZE ;
     public static int maxGameHeight = (12) * TILE_SIZE;
 
 
@@ -47,7 +48,7 @@ public class Panel extends JPanel {
 
         tileManager = new TileManager() ;
         player1 = new Player(tileManager);
-        menuPanel = new MenuPanel(player1.getKeyboard()) ;
+        menuPanel = new MenuPanel(player1.getKeyboard() , this) ;
         enemyManager = new EnemyManager(this , tileManager , player1);
         setBackground(Color.BLACK);
         addKeyListener(player1.getKeyboard());
@@ -100,7 +101,6 @@ public class Panel extends JPanel {
     public void paintComponent (Graphics g)
     {
         super.paintComponent(g);
-
         Graphics2D g2d = (Graphics2D)g;
         if (currentState == MENU)
         {
@@ -109,7 +109,6 @@ public class Panel extends JPanel {
         if (currentState == PLAYING)
         {
             tileManager.draw(g2d , xOffset);
-
             player1.draw(g2d , xOffset);
             enemyManager.draw(g2d , xOffset);
         }

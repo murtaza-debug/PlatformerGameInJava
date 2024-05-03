@@ -18,7 +18,7 @@ public class Player {
     public int y = 64;
     int width = TILE_SIZE + 144;
     int height = TILE_SIZE + 144;
-    double maxSpeed = 3.5 ;
+    double maxSpeed = 4 ;
     public double xSpeed  = 0;
     public double ySpeed = 0;
     Rectangle hitRadius;
@@ -100,8 +100,8 @@ public class Player {
     }
 
 
-protected void updateAnimationTick()
-{
+    protected void updateAnimationTick()
+    {
     aniTick++;
     if(aniTick >= aniSpeed)
     {
@@ -141,7 +141,6 @@ private void updatePosition (int xOffset)
 
     if (xSpeed > maxSpeed) xSpeed = maxSpeed;
     if (xSpeed <= -maxSpeed) xSpeed = -maxSpeed;
-
     /////// JUMPING ////////
     if (keyboard.Space)
     {
@@ -152,7 +151,7 @@ private void updatePosition (int xOffset)
         hitBox.y --;
     }
 
-    ySpeed += 0.2;
+    ySpeed += 0.15;
 
     ///// Horizontal Collisions /////////////
     hitBox.x += xSpeed;
@@ -166,7 +165,6 @@ private void updatePosition (int xOffset)
             hitBox.x -= (int) Math.signum(xSpeed);
             xSpeed = 0;
             x = hitBox.x;
-
         }
     }
 
@@ -186,12 +184,12 @@ private void updatePosition (int xOffset)
         }
     }
     if (attacking(xOffset)) xSpeed = 0;
-    System.out.println("x : " + x + " xSpeed : " + xSpeed );
-    x += xSpeed ;
-    y += ySpeed ;
-    if (direction == LEFT)  hitBox.x = x ;
-    if (direction == RIGHT) hitBox.x = x ;
-    hitBox.y = y;
+
+    x += (int) (xSpeed );
+    y += (int) (ySpeed );
+    hitBox.x = x ;
+    hitBox.y = y ;
+
 }
 
 
@@ -212,16 +210,15 @@ public void update(int xOffset) {
 }
 
 
-
-public void draw(Graphics2D g , int xOffset) {
+    public void draw(Graphics2D g , int xOffset) {
     g.setColor(Color.white);
     
     if (currentAnimation == IDLE_RIGHT) {
-        g.drawImage(playerAnimations.idleRightAnimations[aniIndex], x - 80 - xOffset, y - 70, null);
+        g.drawImage(playerAnimations.idleRightAnimations[aniIndex], x - 80 - xOffset , y - 70, null);
         aniSpeed = 15 ;
     }
     else if (currentAnimation == IDLE_LEFT) {
-        g.drawImage(playerAnimations.idleLeftAnimations[aniIndex], x -90 - xOffset, y - 70, null);
+        g.drawImage(playerAnimations.idleLeftAnimations[aniIndex], x -90 - xOffset , y - 70, null);
         aniSpeed = 15;
     }
     if (currentAnimation == RUNNING_RIGHT) {
@@ -234,7 +231,7 @@ public void draw(Graphics2D g , int xOffset) {
     }
     if (currentAnimation == ATTACK_LEFT_1){
         aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackLeft1Animations[aniIndex], x - 80 - xOffset , y - 70, null);
+        g.drawImage(playerAnimations.attackLeft1Animations[aniIndex], x - 80 - xOffset, y - 70, null);
     }
     else if (currentAnimation == ATTACK_RIGHT_1){
         aniSpeed = 10 ;
@@ -247,9 +244,9 @@ public void draw(Graphics2D g , int xOffset) {
     else if (currentAnimation == ATTACK_RIGHT_2){
         aniSpeed = 10 ;
         g.drawImage(playerAnimations.attackRight2Animations[aniIndex], x - 90 - xOffset, y - 70, null);
-    }
+    }/*
     drawHitBox(g , xOffset);
-    g.drawRect(hitRadius.x - 2*xOffset, hitRadius.y, hitRadius.width, hitRadius.height);
+    g.drawRect(hitRadius.x - xOffset, hitRadius.y, hitRadius.width, hitRadius.height);*/
 }
 
 //// GETTERS AND SETTERS ////////
@@ -260,13 +257,13 @@ public void draw(Graphics2D g , int xOffset) {
     {
         if (keyboard.Attack1) {
             if (direction == RIGHT) {
-                hitRadius.x = x + 30 - xOffset;
+                hitRadius.x = x + 30;
                 hitRadius.y = y;
                 hitRadius.width = width - 180;
                 hitRadius.height = height - 154 ;
             }
             if (direction == LEFT) {
-                hitRadius.x = x - 30 - xOffset;
+                hitRadius.x = x - 30;
                 hitRadius.y = y;
                 hitRadius.width = width - 180;
                 hitRadius.height = height - 154;

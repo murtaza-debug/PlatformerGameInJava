@@ -1,7 +1,5 @@
 package Tiles;
 
-import Animations.PropAnimations;
-import Entities.Player;
 import Loader.Load;
 
 import java.awt.*;
@@ -9,8 +7,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static MAINGAME.Panel.*;
-import static Tiles.TileConstants.*;
-import static Tiles.propConstants.Grass2;
 
 public class TileManager  {
 
@@ -18,48 +14,19 @@ public class TileManager  {
 
     public ArrayList<Tile> tiles = new ArrayList<>();
     //public ArrayList<PropAnimations> propAnimations = new ArrayList<>();
-
+    int x = 0;
 
 
     BufferedImage Map ;
-    BufferedImage[] background1;
-    BufferedImage[] background2;
+    BufferedImage background;
 
     public TileManager() {
-        background1 = new BufferedImage[5];
-        background2 = new BufferedImage[4];
         Map = Load.Image("Map.png");
-
-        background1[0] = Load.Image("1.png");
-        background1[1] = Load.Image("2.png");
-        background1[2] = Load.Image("3.png");
-        background1[3] = Load.Image("4.png");
-        background1[4] = Load.Image("5.png");
-
-        background2[0] = Load.Image("Skye1.png");
-        background2[1] = Load.Image("Skye2.png");
-        background2[2] = Load.Image("Skye3.png");
-        background2[3] = Load.Image("Skye4.png");
-
+        background = Load.Image("bg.jpg");
         makeTiles();
     }
-
-    public void update(int xOffset) {
-       // for (int i = 0; i < propAnimations.size(); i++)
-           // propAnimations.get(i).update();
-
-        for (Tile tile : tiles)
-            tile.updateTileHitBox(xOffset);
-
-    }
-
     public void makeTiles() {
-        /*for (int x = 0; x < map1.length; x++) {
-            for (int y = 0; y < map1[x].length; y++) {
-                if (map1[x][y] != SKYE && map1[x][y] != Grass2) {
-                    tiles.add(new Tile(y * TILE_SIZE, x * TILE_SIZE, TILE_SIZE, TILE_SIZE));
-                    tiles.getLast().type = map1[x][y];
-                }*/
+
         int k = 0;
         Color color ;
         for (int i = 0 ; i < 12; i++) {
@@ -67,37 +34,28 @@ public class TileManager  {
                 color = new Color(Map.getRGB((j* TILE_SIZE +  (j+1)*TILE_SIZE ) / 2,(i * TILE_SIZE +  (i+1)*TILE_SIZE ) / 2) );
                 if ((color.getRed() != 0)) {
                     k++;
-                    System.out.println("i : " + i + " j : " + j + " color : " + color);
-                    System.out.println("ITILE : " + i *TILE_SIZE + "  JTILE " + j * TILE_SIZE + " color : " + color);
-                    System.out.println("ADDED");
                     tiles.add(new Tile(j*TILE_SIZE,i*TILE_SIZE, TILE_SIZE , TILE_SIZE));
                 }
             }
         }
-        System.out.println(k);
-               // if (map1[x][y] == Grass2) {
-                    //propAnimations.add(new PropAnimations(y * TILE_SIZE + y - x, x * TILE_SIZE
-                      //      , TILE_SIZE, TILE_SIZE, Grass2));
-                    //propAnimations.getLast().props.type = map1[x][y];
-               // }
 
+    }
 
-        }
+    public void update(int xOffset) {
+
+        for (Tile tile : tiles)
+            tile.updateTileHitBox(xOffset);
+
+    }
+
 
 
 
     public void draw(Graphics2D g , int xOffSet) {
 
-        for (int i = 0; i < background1.length; i++) {
-                g.drawImage(background1[i],0, 0, null);
-        }
+            g.drawImage(background,0,0, 1280,768,null);
 
-            g.drawImage(Map , -2*xOffSet, 0, null);
-
-
-        for (Tile tile : tiles) {
-            tile.draw(g , xOffset);
-        }
+            g.drawImage(Map , - xOffSet, 0, null);
 
         /*for (Tile tile : tiles)
         {
