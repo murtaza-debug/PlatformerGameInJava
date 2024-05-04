@@ -34,6 +34,7 @@ public class HorizontalBall extends Trap{
         x += speed;
         updateHitBox(xOffset);
         fireAnimations.update();
+        checkIfAttacking();
     }
     private void updateHitBox(int xOffset)
     {
@@ -46,17 +47,19 @@ public class HorizontalBall extends Trap{
             hitBox.y = y + 5;
         }
     }
+    private void checkIfAttacking ()
+    {
+        if (player.hitBox.intersects(hitBox)) {
+            player.HP -= 0.2;
+        }
+    }
 
     @Override
     public void draw(Graphics2D g , int xOffset) {
-        //g.setColor(Color.RED);
         if (currentAnimation == 0)
             g.drawImage(fireAnimations.moveLeft[fireAnimations.aniIndex] , x -xOffset, y , null );
         if (currentAnimation == 1)
             g.drawImage(fireAnimations.moveRight[fireAnimations.aniIndex] , x - xOffset, y , null );
-        //g.setColor(Color.BLACK);
-       // g.drawRect(hitBox.x - xOffset, hitBox.y, hitBox.width, hitBox.height);
-
     }
 
     private boolean isCollidingWall ()

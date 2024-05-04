@@ -57,14 +57,6 @@ public class TileManager  {
 
             g.drawImage(Map , - xOffSet, 0, null);
 
-        /*for (Tile tile : tiles)
-        {
-            tile.draw(g , xOffSet);
-        }*/
-
-        //for (PropAnimations propAnimation : propAnimations) propAnimation.draw(g , xOffset);
-
-
 
     }
 

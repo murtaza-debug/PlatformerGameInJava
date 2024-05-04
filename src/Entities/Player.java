@@ -1,6 +1,7 @@
 package Entities;
 
 import Animations.PlayerAnimations;
+import Audios.Audio;
 import Tiles.Tile;
 import Tiles.TileManager;
 import Tiles.TileMap;
@@ -9,6 +10,7 @@ import UserInput.Keyboard;
 import java.awt.*;
 
 import static Animations.PlayerConstants.*;
+import static Audios.AudioConstants.*;
 import static MAINGAME.Panel.*;
 
 public class Player {
@@ -23,6 +25,8 @@ public class Player {
     public double ySpeed = 0;
     Rectangle hitRadius;
     public int direction;
+    static double HP = 200;
+    String str = String.format("HP : %.2f",HP);
 
     ///////// animations //////////
     PlayerAnimations playerAnimations;
@@ -46,9 +50,14 @@ public class Player {
     /////// Gravity //////////
     public boolean isMoving = false ;
 
+    ///// SOUNDS //////////
+    Audio audio;
+
     //////// CONSTRUCTOR /////////
-    public Player (TileManager tileManager )
+    public Player (TileManager tileManager , Audio audio)
     {
+        this.tileManager = tileManager;
+        this.audio = audio;
         playerAnimations = new PlayerAnimations();
         keyboard = new Keyboard(this) ;
         hitBox = new Rectangle(x , y + 5,width - 180 ,height - 154);
@@ -89,14 +98,6 @@ public class Player {
             if (currentAnimation == ATTACK_LEFT_1 ) aniIndex = 0;
             currentAnimation = ATTACK_LEFT_1 ;
         }
-        /*if (direction == RIGHT && keyboard.Attack2 && !keyboard.Attack1)
-        {
-            currentAnimation = ATTACK_RIGHT_2 ;
-        }
-        if (direction == LEFT && keyboard.Attack2 && !keyboard.Attack1)
-        {
-            currentAnimation = ATTACK_LEFT_2 ;
-        }*/
     }
 
 
@@ -207,11 +208,26 @@ public void update(int xOffset) {
     updateAnimation();
     updateAnimationTick();
     updatePosition(xOffset);
+    updateAudio();
 }
 
+    private void updateAudio() {
+
+        if (keyboard.Attack1 && (aniIndex >= 2 && aniIndex <= GetTotalImages(currentAnimation) - 1)) {
+            audio.playAction(ATTACK);
+        }
+        if (isMoving )
+        {
+            audio.playAction(RUNNING);
+        }
+        else if (!isMoving && !keyboard.Attack1 )
+        {
+            audio.playAction(STOP_ALL);
+        }
+
+    }
 
     public void draw(Graphics2D g , int xOffset) {
-    g.setColor(Color.white);
     
     if (currentAnimation == IDLE_RIGHT) {
         g.drawImage(playerAnimations.idleRightAnimations[aniIndex], x - 80 - xOffset , y - 70, null);
@@ -230,23 +246,16 @@ public void update(int xOffset) {
         g.drawImage(playerAnimations.runningLeftAnimations[aniIndex], x - 90 - xOffset , y - 70, null);
     }
     if (currentAnimation == ATTACK_LEFT_1){
-        aniSpeed = 10 ;
+        aniSpeed = 6 ;
         g.drawImage(playerAnimations.attackLeft1Animations[aniIndex], x - 80 - xOffset, y - 70, null);
     }
     else if (currentAnimation == ATTACK_RIGHT_1){
-        aniSpeed = 10 ;
+        aniSpeed = 6 ;
         g.drawImage(playerAnimations.attackRight1Animations[aniIndex], x - 90 - xOffset , y - 70, null);
     }
-    if (currentAnimation == ATTACK_LEFT_2){
-        aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackLeft2Animations[aniIndex], x - 80 - xOffset , y - 70 , null);
-    }
-    else if (currentAnimation == ATTACK_RIGHT_2){
-        aniSpeed = 10 ;
-        g.drawImage(playerAnimations.attackRight2Animations[aniIndex], x - 90 - xOffset, y - 70, null);
-    }/*
-    drawHitBox(g , xOffset);
-    g.drawRect(hitRadius.x - xOffset, hitRadius.y, hitRadius.width, hitRadius.height);*/
+    g.setColor(Color.RED);
+    str = String.format("HP : %.2f",HP);
+    g.drawString(str, 30 , 10 );
 }
 
 //// GETTERS AND SETTERS ////////

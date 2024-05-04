@@ -1,12 +1,11 @@
 package MAINGAME;
 
+import Audios.Audio;
 import Entities.EnemyManager;
 import Entities.Player;
-import Loader.Load;
 import Tiles.TileManager;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import static GameStates.StateConstants.*;
 
@@ -42,12 +41,15 @@ public class Panel extends JPanel {
     /// GAME STATES  ////
     MenuPanel menuPanel;
     public static int currentState = MENU ;
+
+    ///// SOUNDS ///////
+    Audio audio;
     /// constructor /////
     Panel (Game game)
     {
-
+        audio = new Audio();
         tileManager = new TileManager() ;
-        player1 = new Player(tileManager);
+        player1 = new Player(tileManager , audio);
         menuPanel = new MenuPanel(player1.getKeyboard() , this) ;
         enemyManager = new EnemyManager(this , tileManager , player1);
         setBackground(Color.BLACK);
@@ -68,6 +70,7 @@ public class Panel extends JPanel {
     {
         if (currentState == PLAYING)
         {
+            audio.playMusic();
             checkCloseToBorder ();
             tileManager.update(xOffset);
             player1.update(xOffset);

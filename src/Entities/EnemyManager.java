@@ -57,7 +57,6 @@ public class EnemyManager {
     public void draw (Graphics2D g , int xOffset)
     {
         ball.draw(g , xOffset);
-
         for (Trap trap : traps ) trap.draw(g , xOffset);
     }
 }

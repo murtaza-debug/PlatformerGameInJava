@@ -13,7 +13,7 @@ public class FireSkull {
     int y;
     int radius;
     int speed = 2;
-    Line2D lineOfSight;
+    //Line2D lineOfSight;
     Rectangle hitBox;
     Player player;
     TileManager tileManager;
@@ -28,8 +28,8 @@ public class FireSkull {
         this.radius = radius;
         this.player = player;
         this.tileManager = tileManager;
-        hitBox = new Rectangle(x, y, radius + 10, radius + 10);
-        lineOfSight = new Line2D.Double(hitBox.x, hitBox.y, player.hitBox.x, player.hitBox.y);
+        hitBox = new Rectangle(x, y, radius + 10, radius + 10);/*
+        lineOfSight = new Line2D.Double(hitBox.x, hitBox.y, player.hitBox.x, player.hitBox.y);*/
         fireSkullAnimations = new FireSkullAnimations();
     }
 
@@ -59,17 +59,20 @@ public class FireSkull {
         {
             isHit = false;
         }
+
+        checkIfAttacking();
     }
 
     
     public void draw(Graphics2D g, int xOffset) {
 
         fireSkullAnimations.draw(g , x - xOffset, y);
-        for (Tile tile : tileManager.tiles)
-            if (lineOfSight.intersects(tile.hitBox)) g.setColor(Color.RED);
-
-        g.drawLine((int) lineOfSight.getX1(), (int) lineOfSight.getY1(),
-                (int) lineOfSight.getX2(), (int) lineOfSight.getY2());
+    }
+    private void checkIfAttacking ()
+    {
+        if (player.hitBox.intersects(hitBox) && !isHit) {
+            player.HP -= 0.2;
+        }
     }
     private void checkIfHit ()
     {

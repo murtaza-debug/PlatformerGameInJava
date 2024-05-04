@@ -35,6 +35,7 @@ public class VerticalBall extends Trap{
         y += speed;
         updateHitBox(xOffset);
         fireAnimations.update();
+        checkIfAttacking();
     }
     private void updateHitBox(int xOffset)
     {
@@ -45,6 +46,12 @@ public class VerticalBall extends Trap{
         if (currentAnimation == 1) {
             hitBox.x = x + 5;
             hitBox.y = y + 40;
+        }
+    }
+    private void checkIfAttacking ()
+    {
+        if (player.hitBox.intersects(hitBox)) {
+            player.HP -= 0.2;
         }
     }
 
