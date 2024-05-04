@@ -28,9 +28,19 @@ public class FireSkull {
         this.radius = radius;
         this.player = player;
         this.tileManager = tileManager;
-        hitBox = new Rectangle(x, y, radius + 10, radius + 10);/*
-        lineOfSight = new Line2D.Double(hitBox.x, hitBox.y, player.hitBox.x, player.hitBox.y);*/
+        hitBox = new Rectangle(x, y, radius + 10, radius + 10);
         fireSkullAnimations = new FireSkullAnimations();
+
+    }
+
+    public void setDefaults()
+    {
+        x = - 100 ;
+        y = 64 ;
+        hitBox.x = x ;
+        hitBox.y = y ;
+        hitBox.width = radius+ 10 ;
+        hitBox.height = radius + 10 ;
     }
 
 
@@ -71,7 +81,7 @@ public class FireSkull {
     private void checkIfAttacking ()
     {
         if (player.hitBox.intersects(hitBox) && !isHit) {
-            player.HP -= 0.2;
+            player.HP -= 0.8;
         }
     }
     private void checkIfHit ()

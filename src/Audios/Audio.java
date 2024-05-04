@@ -3,6 +3,8 @@ package Audios;
 import javax.sound.sampled.Clip;
 
 import static Audios.AudioConstants.*;
+import static GameStates.StateConstants.*;
+import static MAINGAME.Panel.currentState;
 
 public class Audio {
 
@@ -16,18 +18,24 @@ public class Audio {
 
     public void playAction(int action)
     {
-        if (action != STOP_ALL) {
-            if (audio.action[action].getLongFramePosition() >= audio.action[action].getFrameLength())
-                audio.action[action].setMicrosecondPosition(0);
-            audio.action[action].start();
-        }
+        if (currentState == PLAYING) {
+            if (action != STOP_ALL) {
+                if (audio.action[action].getLongFramePosition() >= audio.action[action].getFrameLength())
+                    audio.action[action].setMicrosecondPosition(0);
+                audio.action[action].start();
+            }
 
-        for (int i = 0 ; i < audio.action.length ; i++)
+            for (int i = 0; i < audio.action.length; i++) {
+                if (action != i)
+                    audio.action[i].stop();
+                if (action == STOP_ALL) {
+                    audio.action[i].stop();
+                }
+            }
+        }
+        else
         {
-            if (action != i)
-                audio.action[i].stop();
-            if (action == STOP_ALL)
-            {
+            for (int i = 0; i < audio.action.length; i++) {
                 audio.action[i].stop();
             }
         }
@@ -35,9 +43,16 @@ public class Audio {
 
     public void playMusic ()
     {
-        audio.music[BACKGROUND].start();
-        audio.music[BACKGROUND].loop(Clip.LOOP_CONTINUOUSLY);
-        audio.music[HEART_BEAT].start();
-        audio.music[HEART_BEAT].loop(Clip.LOOP_CONTINUOUSLY);
+        if (currentState == PLAYING) {
+            audio.music[BACKGROUND].start();
+            audio.music[BACKGROUND].loop(Clip.LOOP_CONTINUOUSLY);
+            audio.music[HEART_BEAT].start();
+            audio.music[HEART_BEAT].loop(Clip.LOOP_CONTINUOUSLY);
+        }
+        else
+        {
+            audio.music[BACKGROUND].stop();
+            audio.music[HEART_BEAT].stop();
+        }
     }
 }

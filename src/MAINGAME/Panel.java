@@ -7,6 +7,7 @@ import Tiles.TileManager;
 import javax.swing.*;
 import java.awt.*;
 
+import static Entities.Player.HP;
 import static GameStates.StateConstants.*;
 
 public class Panel extends JPanel {
@@ -41,7 +42,6 @@ public class Panel extends JPanel {
     /// GAME STATES  ////
     MenuPanel menuPanel;
     public static int currentState = MENU ;
-
     ///// SOUNDS ///////
     Audio audio;
     /// constructor /////
@@ -70,12 +70,19 @@ public class Panel extends JPanel {
     {
         if (currentState == PLAYING)
         {
-            audio.playMusic();
             checkCloseToBorder ();
             tileManager.update(xOffset);
             player1.update(xOffset);
             enemyManager.update(xOffset);
         }
+        if (HP <= 0)
+        {
+            currentState = MENU ;
+            HP = 200;
+            player1.setDefaults();
+            enemyManager.ball.setDefaults();
+        }
+        audio.playMusic();
     }
 
     private void checkCloseToBorder() {

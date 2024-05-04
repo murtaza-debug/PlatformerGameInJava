@@ -15,7 +15,7 @@ public class EnemyManager {
 
     Panel panel ;
     TileManager tileManager ;
-    FireSkull ball;
+    public FireSkull ball;
     ArrayList<Trap> traps = new ArrayList<>();
     Player player;
     BufferedImage enemyMap;

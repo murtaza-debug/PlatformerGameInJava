@@ -51,7 +51,7 @@ public class VerticalBall extends Trap{
     private void checkIfAttacking ()
     {
         if (player.hitBox.intersects(hitBox)) {
-            player.HP -= 0.2;
+            player.HP -= 5;
         }
     }
 

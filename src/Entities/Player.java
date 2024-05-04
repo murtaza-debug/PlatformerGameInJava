@@ -25,8 +25,9 @@ public class Player {
     public double ySpeed = 0;
     Rectangle hitRadius;
     public int direction;
-    static double HP = 200;
-    String str = String.format("HP : %.2f",HP);
+    public static double HP = 200;
+    String HP_STATUS = String.format("HP : %.2f",HP);
+    boolean inAir = false;
 
     ///////// animations //////////
     PlayerAnimations playerAnimations;
@@ -63,6 +64,19 @@ public class Player {
         hitBox = new Rectangle(x , y + 5,width - 180 ,height - 154);
         this.hitRadius = new Rectangle(x + 30 , y + 5 ,width - 180 ,height - 154 );
         this.tileManager = tileManager ;
+
+    }
+
+    public void setDefaults()
+    {
+         x = 64;
+         y = 64;
+         width = TILE_SIZE + 144;
+         height = TILE_SIZE + 144;
+         maxSpeed = 4 ;
+          xSpeed  = 0;
+          ySpeed = 0;
+          HP = 200;
     }
 
     /////// ANIMATIONS ////////
@@ -154,6 +168,8 @@ private void updatePosition (int xOffset)
 
     ySpeed += 0.15;
 
+
+
     ///// Horizontal Collisions /////////////
     hitBox.x += xSpeed;
     for (Tile tile : tileManager.tiles) {
@@ -186,6 +202,13 @@ private void updatePosition (int xOffset)
     }
     if (attacking(xOffset)) xSpeed = 0;
 
+    if (ySpeed <= 0 )
+    {
+        inAir = true;
+    }
+    else if ( ySpeed >= 1) inAir = true;
+    else inAir = false;
+
     x += (int) (xSpeed );
     y += (int) (ySpeed );
     hitBox.x = x ;
@@ -216,11 +239,11 @@ public void update(int xOffset) {
         if (keyboard.Attack1 && (aniIndex >= 2 && aniIndex <= GetTotalImages(currentAnimation) - 1)) {
             audio.playAction(ATTACK);
         }
-        if (isMoving )
+        if (isMoving && !inAir)
         {
             audio.playAction(RUNNING);
         }
-        else if (!isMoving && !keyboard.Attack1 )
+        else if (!isMoving && !keyboard.Attack1 || inAir )
         {
             audio.playAction(STOP_ALL);
         }
@@ -238,11 +261,11 @@ public void update(int xOffset) {
         aniSpeed = 15;
     }
     if (currentAnimation == RUNNING_RIGHT) {
-        aniSpeed = 10 ;
+        aniSpeed = 6 ;
         g.drawImage(playerAnimations.runningRightAnimations[aniIndex], x - 80 - xOffset, y - 70,null);
     }
     else if (currentAnimation == RUNNING_LEFT) {
-        aniSpeed = 10 ;
+        aniSpeed = 6 ;
         g.drawImage(playerAnimations.runningLeftAnimations[aniIndex], x - 90 - xOffset , y - 70, null);
     }
     if (currentAnimation == ATTACK_LEFT_1){
@@ -253,9 +276,16 @@ public void update(int xOffset) {
         aniSpeed = 6 ;
         g.drawImage(playerAnimations.attackRight1Animations[aniIndex], x - 90 - xOffset , y - 70, null);
     }
+
     g.setColor(Color.RED);
-    str = String.format("HP : %.2f",HP);
-    g.drawString(str, 30 , 10 );
+    g.fillRect(1080 - 20,10,200,20);
+
+    g.setColor(Color.GREEN);
+    g.fillRect(1080 -20,10,(int)HP,20);
+
+    g.setColor(Color.BLACK);
+    HP_STATUS = String.format("HP : %.2f",HP);
+    g.drawString(HP_STATUS, 1080 - 20 , 22 );
 }
 
 //// GETTERS AND SETTERS ////////
