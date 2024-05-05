@@ -75,7 +75,6 @@ public class FireSkull {
 
         checkIfAttacking();
     }
-
     
     public void draw(Graphics2D g, int xOffset) {
 
