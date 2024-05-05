@@ -1,5 +1,4 @@
 package MAINGAME;
-import static GameStates.StateConstants.*;
 public class Game implements Runnable{
 
     Frame frame ;
