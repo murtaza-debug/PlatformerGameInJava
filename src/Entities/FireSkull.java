@@ -57,8 +57,8 @@ public class FireSkull {
             double tempXSpeed = (xDistance > 0) ? speed : (xDistance < 0) ? -speed : 0;
             double tempYSpeed = (yDistance > 0) ? speed : (yDistance < 0) ? -speed : 0;
 
-            if (xDistance >= 400) tempXSpeed += 3;
-            if (yDistance >= 400) tempYSpeed += 3;
+            if (xDistance >= 200) tempXSpeed += 3;
+            if (yDistance >= 200) tempYSpeed += 3;
             // Update ball's position
             x += (int) tempXSpeed;
             y += (int) tempYSpeed;
