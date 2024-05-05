@@ -89,7 +89,7 @@ public class FireSkull {
     private void checkIfAttacking ()
     {
         if (player.hitBox.intersects(hitBox) && !isHit) {
-            player.HP -= 0.8;
+            player.HP -= 1;
         }
     }
     private void checkIfHit ()
