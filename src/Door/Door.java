@@ -49,7 +49,7 @@ public class Door {
         doorAnimation[15] = doorImage.getSubimage(96,96,32,32);
 
         x = TILE_SIZE * 191;
-        y = TILE_SIZE * 7;
+        y = TILE_SIZE * 8;
 
         doorHitBox = new Rectangle(x,y,64,64);
         this.player = player;

@@ -1,8 +1,10 @@
 package Collectables;
 
 import Entities.Player;
+import Loader.Load;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static Entities.Player.HP;
 import static Entities.Player.maxHP;
@@ -11,16 +13,18 @@ public class Health {
 
     int x;
     int y;
-    int health = 10;
+    int health = 30;
     Rectangle hitBox;
     Player player ;
     boolean dead;
+    BufferedImage health_Image;
 
     Health(int x, int y, Player player) {
-        this.x = x + 32;
-        this.y = y + 32;
+        this.x = x + 20;
+        this.y = y + 20;
         this.player = player;
-        this.hitBox = new Rectangle(x + 32, y + 32, 20, 20);
+        this.hitBox = new Rectangle(x + 30, y + 30, 30, 30);
+        health_Image = Load.Image("Health.png");
     }
 
     public void isHit()
@@ -40,11 +44,8 @@ public class Health {
 
     public void draw (Graphics2D g , int xOffset)
     {
-        g.setColor(Color.red);
-        g.fillOval(x - xOffset, y, 20, 20);
+        g.drawImage(health_Image, x - xOffset, y, 50, 50, null);
 
-        g.setColor(Color.black);
-        g.drawRect(hitBox.x - xOffset, hitBox.y, hitBox.width, hitBox.height);
 
     }
 }

@@ -2,6 +2,7 @@ package Entities;
 
 import Animations.PlayerAnimations;
 import Audios.Audio;
+import Audios.AudioConstants;
 import Tiles.Tile;
 import Tiles.TileManager;
 import Tiles.TileMap;
@@ -28,7 +29,7 @@ public class Player {
     public static double HP = 200;
     public static double maxHP = 200;
     String HP_STATUS = String.format("HP : %.2f",HP);
-    boolean inAir = false;
+    public static boolean inAir = false;
     public Rectangle hearingRadius;
 
     ///////// animations //////////
@@ -55,6 +56,8 @@ public class Player {
 
     ///// SOUNDS //////////
     Audio audio;
+    int attack_delay = 0;
+    public static int jump_delay = 15;
 
     //////// CONSTRUCTOR /////////
     public Player (TileManager tileManager , Audio audio)
@@ -65,7 +68,7 @@ public class Player {
         keyboard = new Keyboard(this) ;
         hitBox = new Rectangle(x , y + 5,width - 180 ,height - 154);
         hearingRadius = new Rectangle(x - 100 , y - 50 , width + 100 , height + 50);
-        this.hitRadius = new Rectangle(x + 30 , y + 5 ,width - 180 ,height - 154 );
+        this.hitRadius = new Rectangle(x  , y + 5 ,width - 180 + 30,height - 154 );
         this.tileManager = tileManager ;
 
     }
@@ -113,13 +116,20 @@ public class Player {
         if (direction == RIGHT && keyboard.Attack1 && !keyboard.Attack2) {
             if (currentAnimation == ATTACK_RIGHT_1 ) aniIndex = 0;
             currentAnimation = ATTACK_RIGHT_1 ;
+            attack_delay++;
+            if(attack_delay >= 2) {
                 updateAudio(ATTACK);
+                attack_delay = 0;
+            }
         }
         if (direction == LEFT && keyboard.Attack1 && !keyboard.Attack2){
             if (currentAnimation == ATTACK_LEFT_1 ) aniIndex = 0;
             currentAnimation = ATTACK_LEFT_1 ;
-
+            attack_delay++;
+        if(attack_delay >= 2) {
                 updateAudio(ATTACK);
+                attack_delay = 0;
+            }
 
         }
     }
@@ -176,6 +186,7 @@ private void updatePosition (int xOffset)
             if (tile.hitBox.intersects(hitBox)) ySpeed = -7;
         }
         hitBox.y --;
+        updateAudio(JUMPING);
     }
 
     ySpeed += 0.15;
@@ -214,17 +225,12 @@ private void updatePosition (int xOffset)
     }
     if (attacking(xOffset)) xSpeed = 0;
 
-    if (ySpeed <= 0 )
+    if (ySpeed >= 0 && ySpeed<=1 )
     {
-        inAir = true;
+        inAir = false;
 
     }
-    else if ( ySpeed >= 1)
-    {
-        inAir = true;
-
-    }
-    else inAir = false;
+    else inAir = true;
 
     x += (int) (xSpeed );
     y += (int) (ySpeed );
@@ -238,7 +244,8 @@ private void updatePosition (int xOffset)
     if (y >= 768) HP = 0;
     if (y <= 0)
     {
-        ySpeed = ySpeed>0 ? ySpeed : -ySpeed;
+        /// PLAYER CANNOT GO ABOVE THE SCREEN
+        ySpeed = (ySpeed > 0) ? ySpeed : -ySpeed;
     }
 
     HP -= 0.001 ;
@@ -313,15 +320,15 @@ public void update(int xOffset) {
     {
         if (keyboard.Attack1) {
             if (direction == RIGHT) {
-                hitRadius.x = x + 30;
+                hitRadius.x = x ;
                 hitRadius.y = y;
-                hitRadius.width = width - 180;
+                hitRadius.width = width - 180 + 30;
                 hitRadius.height = height - 154 ;
             }
             if (direction == LEFT) {
-                hitRadius.x = x - 30;
+                hitRadius.x = x - 64;
                 hitRadius.y = y;
-                hitRadius.width = width - 180;
+                hitRadius.width = 64 + 40;
                 hitRadius.height = height - 154;
             }
                 return true ;

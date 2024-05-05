@@ -57,10 +57,13 @@ public class FireSkull {
             double xDistance = player.hitBox.x - x;
             double yDistance = player.hitBox.y - y;
 
+
             // Move towards the player
             double tempXSpeed = (xDistance > 0) ? speed : (xDistance < 0) ? -speed : 0;
             double tempYSpeed = (yDistance > 0) ? speed : (yDistance < 0) ? -speed : 0;
 
+            if (xDistance >= 400) tempXSpeed += 2;
+            if (yDistance >= 400) tempYSpeed += 2;
             // Update ball's position
             x += (int) tempXSpeed;
             y += (int) tempYSpeed;

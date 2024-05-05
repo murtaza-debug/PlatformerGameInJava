@@ -33,9 +33,16 @@ public class CollectableManager {
                 if ((color.getRed() == 200 & color.getBlue() == 200 && color.getGreen() == 200)) {
                     healths.add(new Health(j*TILE_SIZE,i*TILE_SIZE, player ));
                 }
-
             }
         }
+    }
+
+    public void resetHealth()
+    {
+        for (int i = healths.size() -1 ; i>=0 ; i--) {
+            healths.remove(i);
+        }
+        addHealth();
     }
 
     public void update()

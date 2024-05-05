@@ -46,6 +46,7 @@ public class Panel extends JPanel {
 
     /// GAME STATES  ////
     MenuPanel menuPanel;
+    GameOver gameOver;
     public static int currentState = MENU ;
     ///// SOUNDS ///////
     Audio audio;
@@ -59,6 +60,7 @@ public class Panel extends JPanel {
         enemyManager = new EnemyManager(this , tileManager , player1);
         collectableManager = new CollectableManager(player1);
         door = new Door(player1);
+        gameOver = new GameOver(player1.getKeyboard() , this) ;
         setBackground(Color.BLACK);
         addKeyListener(player1.getKeyboard());
         addMouseListener(menuPanel.mouse);
@@ -86,11 +88,16 @@ public class Panel extends JPanel {
         }
         if (HP <= 0 || door.over)
         {
-            currentState = MENU ;
+            currentState = GAME_OVER ;
+
+            if (HP <= 0) gameOver.won = false ;
+            else gameOver.won = true ;
+
             HP = 200;
             player1.setDefaults();
             enemyManager.ball.setDefaults();
             door.setDefaults();
+            collectableManager.resetHealth();
         }
         audio.playMusic();
     }
@@ -125,6 +132,10 @@ public class Panel extends JPanel {
         if (currentState == MENU)
         {
             menuPanel.draw(g2d);
+        }
+        if (currentState == GAME_OVER)
+        {
+            gameOver.draw(g2d);
         }
         if (currentState == PLAYING)
         {

@@ -18,17 +18,7 @@ public class Mouse implements MouseListener , MouseMotionListener {
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getX() > playHitBox.x  && e.getX() < playHitBox.x + 168
-            && e.getY() >  playHitBox.y && e.getY() < playHitBox.y + playHitBox.height)
-        {
-            playCurrent = 2 ;
-            currentState = PLAYING ;
-        }
-        if (e.getX() > quitHitBox.x  - 88 && e.getX() < quitHitBox.x + 168
-                && e.getY() > quitHitBox.y  && e.getY() < quitHitBox.y + quitHitBox.height)
-        {
-            System.exit(3);
-        }
+
 
     }
 
@@ -39,7 +29,17 @@ public class Mouse implements MouseListener , MouseMotionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if (e.getX() > playHitBox.x  && e.getX() < playHitBox.x + 168
+                && e.getY() >  playHitBox.y && e.getY() < playHitBox.y + playHitBox.height)
+        {
+            playCurrent = 2 ;
+            currentState = PLAYING ;
+        }
+        if (e.getX() > quitHitBox.x  - 88 && e.getX() < quitHitBox.x + 168
+                && e.getY() > quitHitBox.y  && e.getY() < quitHitBox.y + quitHitBox.height)
+        {
+            System.exit(3);
+        }
     }
 
     @Override

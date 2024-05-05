@@ -18,7 +18,7 @@ public class TileManager  {
 
 
     BufferedImage Map ;
-    BufferedImage background;
+    public static BufferedImage background;
 
     public TileManager() {
         Map = Load.Image("Map.png");

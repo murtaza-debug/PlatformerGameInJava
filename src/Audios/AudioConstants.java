@@ -11,6 +11,8 @@ public class AudioConstants {
 
     public static final int BACKGROUND = 0 ;
     public static final int HEART_BEAT = 1 ;
+    public static final int MENU_AUDIO = 2 ;
+    public static final int TERROR = 3 ;
 
     public static final int STOP_ALL = -1 ;
 }

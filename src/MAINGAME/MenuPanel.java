@@ -7,9 +7,7 @@ import java.awt.image.BufferedImage;
 import Loader.Load;
 import UserInput.Keyboard;
 import UserInput.Mouse;
-
-import static GameStates.StateConstants.PLAY;
-import static GameStates.StateConstants.QUIT;
+import static Tiles.TileManager.*;
 import static MAINGAME.Panel.*;
 
 public class MenuPanel extends JPanel {
@@ -67,8 +65,8 @@ public class MenuPanel extends JPanel {
 
     public void draw(Graphics2D g)
     {
-        for (int i = 0 ; i < bg.length ; i ++)
-            g.drawImage(bg[i],0,0,null);
+        g.drawImage(background,0,0,null);
+
         g.drawImage(playButtons[playCurrent] , GAME_WIDTH / 2  - 88, GAME_HEIGHT / 2 - 88 , null);
         g.drawImage(quitButtons[0] , GAME_WIDTH / 2  - 88, GAME_HEIGHT / 2 + 30 , null);
     }
