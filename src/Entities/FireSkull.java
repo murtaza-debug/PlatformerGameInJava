@@ -2,13 +2,8 @@ package Entities;
 
 import Animations.FireSkullAnimations;
 import Audios.Audio;
-import Tiles.Tile;
 import Tiles.TileManager;
-
 import java.awt.*;
-import java.awt.geom.Line2D;
-
-import static Audios.AudioConstants.SKULL;
 
 public class FireSkull {
 
