@@ -18,35 +18,10 @@ public class Audio {
 
     public void playAction(int action)
     {
-        if (currentState == PLAYING) {
-            if (action != STOP_ALL) {
-                if (audio.action[action].getLongFramePosition() >= audio.action[action].getFrameLength())
-                    audio.action[action].setMicrosecondPosition(0);
+        if (!audio.action[action].isActive())
+            audio.action[action].setMicrosecondPosition(0);
+        audio.action[action].start();
 
-                audio.action[action].start();
-
-                if (action == SKULL) {
-                    audio.action[action].loop(Clip.LOOP_CONTINUOUSLY);
-                }
-                if (action == FIRE) {
-                    audio.action[action].loop(Clip.LOOP_CONTINUOUSLY);
-                }
-            }
-
-            for (int i = 0; i < audio.action.length; i++) {
-                if (action != i)
-                    audio.action[i].stop();
-                if (action == STOP_ALL) {
-                    audio.action[i].stop();
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < audio.action.length; i++) {
-                audio.action[i].stop();
-            }
-        }
     }
 
     public void playMusic ()
@@ -56,6 +31,8 @@ public class Audio {
             audio.music[BACKGROUND].loop(Clip.LOOP_CONTINUOUSLY);
             audio.music[HEART_BEAT].start();
             audio.music[HEART_BEAT].loop(Clip.LOOP_CONTINUOUSLY);
+            audio.action[SKULL].start();
+            audio.action[SKULL].loop(Clip.LOOP_CONTINUOUSLY);
         }
         else
         {

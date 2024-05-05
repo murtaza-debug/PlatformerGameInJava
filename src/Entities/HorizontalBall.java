@@ -54,6 +54,7 @@ public class HorizontalBall extends Trap{
         if (player.hitBox.intersects(hitBox)) {
             player.HP -= 4;
         }
+
     }
 
     @Override

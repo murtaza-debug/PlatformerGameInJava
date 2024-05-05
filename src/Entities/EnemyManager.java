@@ -52,12 +52,22 @@ public class EnemyManager {
     }
 
 
+
+
     public void update (int xOffset)
     {
         ball.update(xOffset);
-        for (Trap trap : traps ) trap.update(xOffset);
+        for (Trap trap : traps )
+        {
+            trap.update(xOffset);
+            if (player.hearingRadius.intersects(trap.hitBox))
+            {
+                audio.playAction(FIRE);
+            }
+        }
 
-        audio.playAction(FIRE);
+
+
     }
 
     public void draw (Graphics2D g , int xOffset)

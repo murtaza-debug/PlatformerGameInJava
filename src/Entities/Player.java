@@ -29,6 +29,7 @@ public class Player {
     public static double maxHP = 200;
     String HP_STATUS = String.format("HP : %.2f",HP);
     boolean inAir = false;
+    public Rectangle hearingRadius;
 
     ///////// animations //////////
     PlayerAnimations playerAnimations;
@@ -63,6 +64,7 @@ public class Player {
         playerAnimations = new PlayerAnimations();
         keyboard = new Keyboard(this) ;
         hitBox = new Rectangle(x , y + 5,width - 180 ,height - 154);
+        hearingRadius = new Rectangle(x - 100 , y - 50 , width + 100 , height + 50);
         this.hitRadius = new Rectangle(x + 30 , y + 5 ,width - 180 ,height - 154 );
         this.tileManager = tileManager ;
 
@@ -97,6 +99,9 @@ public class Player {
                     aniIndex = 0;
                 }
             }
+            if (keyboard.Left && !keyboard.Right || !keyboard.Left && keyboard.Right) {
+                updateAudio(RUNNING);
+            }
         }
         else {
             if (direction == LEFT) {
@@ -108,10 +113,14 @@ public class Player {
         if (direction == RIGHT && keyboard.Attack1 && !keyboard.Attack2) {
             if (currentAnimation == ATTACK_RIGHT_1 ) aniIndex = 0;
             currentAnimation = ATTACK_RIGHT_1 ;
+                updateAudio(ATTACK);
         }
         if (direction == LEFT && keyboard.Attack1 && !keyboard.Attack2){
             if (currentAnimation == ATTACK_LEFT_1 ) aniIndex = 0;
             currentAnimation = ATTACK_LEFT_1 ;
+
+                updateAudio(ATTACK);
+
         }
     }
 
@@ -151,6 +160,8 @@ private void updatePosition (int xOffset)
         isMoving = true ;
         direction = RIGHT;
     }
+
+
 
     if (xSpeed > 0 && xSpeed < 0.75) xSpeed = 0;
     if (xSpeed < 0 && xSpeed > -0.75) xSpeed = 0;
@@ -219,6 +230,10 @@ private void updatePosition (int xOffset)
     y += (int) (ySpeed );
     hitBox.x = x ;
     hitBox.y = y ;
+    hearingRadius.x = x - 100;
+    hearingRadius.y = y - 50;
+    hearingRadius.width = x + 100;
+    hearingRadius.height = y + 50 ;
 
     if (y >= 768) HP = 0;
     if (y <= 0)
@@ -245,23 +260,10 @@ public void update(int xOffset) {
     updateAnimation();
     updateAnimationTick();
     updatePosition(xOffset);
-    updateAudio();
 }
 
-    private void updateAudio() {
-
-        if (keyboard.Attack1 && (aniIndex >= 2 && aniIndex <= GetTotalImages(currentAnimation) - 1)) {
-            audio.playAction(ATTACK);
-        }
-        if (isMoving && !inAir)
-        {
-            audio.playAction(RUNNING);
-        }
-        else if (!isMoving && !keyboard.Attack1 || inAir )
-        {
-            audio.playAction(STOP_ALL);
-        }
-
+    private void updateAudio(int action) {
+       audio.playAction(action);
     }
 
     public void draw(Graphics2D g , int xOffset) {

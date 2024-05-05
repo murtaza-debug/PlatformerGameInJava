@@ -68,7 +68,6 @@ public class FireSkull {
             // Update hitbox position
             hitBox.x = (int) x;
             hitBox.y = (int) y;
-            audio.playAction(SKULL);
         }
 
         else if (System.currentTimeMillis() - coolDown  > coolDownTime * 1000)
