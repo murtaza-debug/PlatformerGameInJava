@@ -7,12 +7,14 @@ import javax.sound.sampled.Clip;
 public class LoadAudio {
 
     private final int music_max = 2;
-    private final int action_max = 2;
+    private final int action_max = 4;
     private String BACKGROUND_AUDIO = "Main2.wav" ;
     private String HEART_BEAT = "Default.wav";
 
     private String ATTACK = "Slash.wav";
     private String RUNNING = "Running.wav";
+    private String Skull = "Skull.wav";
+    private String Fire = "Fire.wav";
 
     protected Clip music[];
     protected Clip action[];
@@ -35,5 +37,7 @@ public class LoadAudio {
     {
         action[0] = Load.Audio(ATTACK);
         action[1] = Load.Audio(RUNNING);
+        action[2] = Load.Audio(Skull);
+        action[3] = Load.Audio(Fire);
     }
 }

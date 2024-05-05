@@ -26,6 +26,7 @@ public class Player {
     Rectangle hitRadius;
     public int direction;
     public static double HP = 200;
+    public static double maxHP = 200;
     String HP_STATUS = String.format("HP : %.2f",HP);
     boolean inAir = false;
 
@@ -205,14 +206,27 @@ private void updatePosition (int xOffset)
     if (ySpeed <= 0 )
     {
         inAir = true;
+
     }
-    else if ( ySpeed >= 1) inAir = true;
+    else if ( ySpeed >= 1)
+    {
+        inAir = true;
+
+    }
     else inAir = false;
 
     x += (int) (xSpeed );
     y += (int) (ySpeed );
     hitBox.x = x ;
     hitBox.y = y ;
+
+    if (y >= 768) HP = 0;
+    if (y <= 0)
+    {
+        ySpeed = ySpeed>0 ? ySpeed : -ySpeed;
+    }
+
+    HP -= 0.001 ;
 
 }
 
@@ -276,6 +290,7 @@ public void update(int xOffset) {
         aniSpeed = 6 ;
         g.drawImage(playerAnimations.attackRight1Animations[aniIndex], x - 90 - xOffset , y - 70, null);
     }
+
 
     g.setColor(Color.RED);
     g.fillRect(1080 - 20,10,200,20);

@@ -1,6 +1,5 @@
 package Animations;
 
-import Entities.Player;
 import Loader.Load;
 
 import java.awt.image.BufferedImage;
@@ -19,9 +18,9 @@ public class PlayerAnimations {
     public BufferedImage attackLeft1Image ;
     public BufferedImage attackRight1Image ;
 
-    public BufferedImage attackLeft2Image ;
-    public BufferedImage attackRight2Image ;
 
+    public BufferedImage jumpLeftImage;
+    public BufferedImage jumpRightImage;
 
     ////// FOR SUB IMAGES TO ANIMATE //////
 
@@ -31,8 +30,8 @@ public class PlayerAnimations {
     public BufferedImage [] runningLeftAnimations;
     public BufferedImage [] attackLeft1Animations ;
     public BufferedImage [] attackRight1Animations ;
-    public BufferedImage [] attackLeft2Animations ;
-    public BufferedImage [] attackRight2Animations ;
+    public BufferedImage [] jumpLeftAnimations ;
+    public BufferedImage [] jumpRightAnimations ;
 
     int width = 200 ;
 
@@ -50,8 +49,9 @@ public class PlayerAnimations {
         attackLeft1Animations = new BufferedImage[GetTotalImages(ATTACK_LEFT_1)];
         attackRight1Animations = new BufferedImage[GetTotalImages(ATTACK_RIGHT_1)];
 
-        attackRight2Animations = new BufferedImage[GetTotalImages(ATTACK_RIGHT_2)];
-        attackLeft2Animations = new BufferedImage[GetTotalImages(ATTACK_LEFT_2)];
+
+        jumpLeftAnimations = new BufferedImage[GetTotalImages(JUMP_LEFT)];
+        jumpRightAnimations = new BufferedImage[GetTotalImages(JUMP_RIGHT)];
 
         loadAnimations();
     }
@@ -65,9 +65,8 @@ public class PlayerAnimations {
         attackLeft1Image = Load.Image("AttackLeft1.png");
         attackRight1Image = Load.Image("AttackRight1.png");
 
-        attackLeft2Image = Load.Image("AttackLeft2.png");
-        attackRight2Image = Load.Image("AttackRight2.png");
-
+        jumpLeftImage = Load.Image("JumpLeft.png");
+        jumpRightImage = Load.Image("JumpRight.png");
 
     }
 
@@ -92,10 +91,13 @@ public class PlayerAnimations {
             attackLeft1Animations[i] = attackLeft1Image.getSubimage(i * width, 0, 200, 200);
             attackRight1Animations[j] = attackRight1Image.getSubimage(j * width, 0, 200, 200);
 
-            attackLeft2Animations[i] = attackLeft2Image.getSubimage(i * width, 0, 200, 200);
-            attackRight2Animations[j] = attackRight2Image.getSubimage(j * width, 0, 200, 200);
         }
 
+        for (int i = 0 , j = GetTotalImages(JUMP_LEFT) - 1 ; i < GetTotalImages(JUMP_LEFT) && j >= 0 ; i++ , j-- )
+        {
+            jumpLeftAnimations[i] = jumpLeftImage.getSubimage(i * width, 0, 200, 200);
+            jumpRightAnimations[j] = jumpRightImage.getSubimage(i * width, 0, 200, 200);
+        }
 
     }
 

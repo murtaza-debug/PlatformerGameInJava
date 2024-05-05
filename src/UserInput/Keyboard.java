@@ -50,8 +50,6 @@ public class Keyboard implements KeyListener {
                 case KeyEvent.VK_D :
                     Right = true ;
                     break;
-
-
             }
 
     }

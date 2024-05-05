@@ -9,8 +9,8 @@ public class PlayerConstants {
     public static final int RUNNING_RIGHT = 3 ;
     public static final int ATTACK_LEFT_1 = 4 ;
     public static final int ATTACK_RIGHT_1 = 5 ;
-    public static final int ATTACK_RIGHT_2 = 6 ;
-    public static final int ATTACK_LEFT_2 = 7 ;
+    public static final int JUMP_RIGHT = 6 ;
+    public static final int JUMP_LEFT = 7 ;
 
     ////// DIRECTION ///////////
     public static final int LEFT = 3 ;
@@ -29,10 +29,12 @@ public class PlayerConstants {
 
             case ATTACK_LEFT_1:
             case ATTACK_RIGHT_1:
-            case ATTACK_RIGHT_2:
-            case ATTACK_LEFT_2:
 
                 return 6 ;
+
+            case JUMP_RIGHT:
+            case JUMP_LEFT:
+                return 2 ;
 
             default:
                 return 1 ;

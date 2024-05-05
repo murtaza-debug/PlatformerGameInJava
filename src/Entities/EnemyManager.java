@@ -1,5 +1,6 @@
 package Entities;
 
+import Audios.Audio;
 import Loader.Load;
 import MAINGAME.Panel;
 import Tiles.Tile;
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import static Audios.AudioConstants.FIRE;
 import static MAINGAME.Panel.TILE_SIZE;
 
 public class EnemyManager {
@@ -19,6 +21,7 @@ public class EnemyManager {
     ArrayList<Trap> traps = new ArrayList<>();
     Player player;
     BufferedImage enemyMap;
+    Audio audio ;
     public EnemyManager(Panel panel , TileManager tileManager, Player player)
     {
         enemyMap = Load.Image("EnemyMap.png");
@@ -26,6 +29,7 @@ public class EnemyManager {
         this.tileManager = tileManager;
         ball = new FireSkull(-100,64,20 , player , tileManager);
         this.player = player;
+        audio = new Audio();
         addTraps();
 
     }
@@ -52,6 +56,8 @@ public class EnemyManager {
     {
         ball.update(xOffset);
         for (Trap trap : traps ) trap.update(xOffset);
+
+        audio.playAction(FIRE);
     }
 
     public void draw (Graphics2D g , int xOffset)

@@ -6,6 +6,7 @@ import Tiles.TileManager;
 
 import java.awt.*;
 
+import static Audios.AudioConstants.FIRE;
 import static MAINGAME.Panel.maxGameWidth;
 
 public class HorizontalBall extends Trap{
@@ -46,6 +47,7 @@ public class HorizontalBall extends Trap{
             hitBox.x = x + 40;
             hitBox.y = y + 5;
         }
+
     }
     private void checkIfAttacking ()
     {

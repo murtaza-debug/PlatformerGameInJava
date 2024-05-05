@@ -6,6 +6,8 @@ import Tiles.TileManager;
 
 import java.awt.*;
 
+import static Audios.AudioConstants.FIRE;
+
 public class VerticalBall extends Trap{
 
     int speed  = 2;
@@ -57,14 +59,10 @@ public class VerticalBall extends Trap{
 
     @Override
     public void draw(Graphics2D g , int xOffset) {
-        //g.setColor(Color.RED);
         if (currentAnimation == 0)
             g.drawImage(fireAnimations.moveUp[fireAnimations.aniIndex] , x - xOffset , y , null );
         if (currentAnimation == 1)
             g.drawImage(fireAnimations.moveDown[fireAnimations.aniIndex] , x - xOffset , y , null );
-        //g.setColor(Color.BLACK);
-       // g.drawRect(hitBox.x - xOffset, hitBox.y, hitBox.width, hitBox.height);
-
     }
 
 

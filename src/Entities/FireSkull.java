@@ -1,11 +1,14 @@
 package Entities;
 
 import Animations.FireSkullAnimations;
+import Audios.Audio;
 import Tiles.Tile;
 import Tiles.TileManager;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
+
+import static Audios.AudioConstants.SKULL;
 
 public class FireSkull {
 
@@ -21,6 +24,7 @@ public class FireSkull {
     private long coolDown ;
     FireSkullAnimations fireSkullAnimations;
     float coolDownTime = 1.5f;
+    Audio audio ;
 
     public FireSkull(int x, int y, int radius, Player player, TileManager tileManager) {
         this.x = x;
@@ -30,6 +34,7 @@ public class FireSkull {
         this.tileManager = tileManager;
         hitBox = new Rectangle(x, y, radius + 10, radius + 10);
         fireSkullAnimations = new FireSkullAnimations();
+        audio = new Audio();
 
     }
 
@@ -63,6 +68,7 @@ public class FireSkull {
             // Update hitbox position
             hitBox.x = (int) x;
             hitBox.y = (int) y;
+            audio.playAction(SKULL);
         }
 
         else if (System.currentTimeMillis() - coolDown  > coolDownTime * 1000)

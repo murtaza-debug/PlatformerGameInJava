@@ -1,11 +1,13 @@
 package MAINGAME;
 
 import Audios.Audio;
+import Collectables.CollectableManager;
 import Entities.EnemyManager;
 import Entities.Player;
 import Tiles.TileManager;
 import javax.swing.*;
 import java.awt.*;
+import Door.Door;
 
 import static Entities.Player.HP;
 import static GameStates.StateConstants.*;
@@ -35,9 +37,12 @@ public class Panel extends JPanel {
     //// ENTITIES AND MAPS //////
     Player player1;
     public TileManager tileManager ;
-
+    Door door;
     ////// ENEMIES ///////
     EnemyManager enemyManager ;
+
+    ///// COLLECTABLES /////////
+    CollectableManager collectableManager;
 
     /// GAME STATES  ////
     MenuPanel menuPanel;
@@ -52,6 +57,8 @@ public class Panel extends JPanel {
         player1 = new Player(tileManager , audio);
         menuPanel = new MenuPanel(player1.getKeyboard() , this) ;
         enemyManager = new EnemyManager(this , tileManager , player1);
+        collectableManager = new CollectableManager(player1);
+        door = new Door(player1);
         setBackground(Color.BLACK);
         addKeyListener(player1.getKeyboard());
         addMouseListener(menuPanel.mouse);
@@ -74,13 +81,16 @@ public class Panel extends JPanel {
             tileManager.update(xOffset);
             player1.update(xOffset);
             enemyManager.update(xOffset);
+            collectableManager.update();
+            door.update();
         }
-        if (HP <= 0)
+        if (HP <= 0 || door.over)
         {
             currentState = MENU ;
             HP = 200;
             player1.setDefaults();
             enemyManager.ball.setDefaults();
+            door.setDefaults();
         }
         audio.playMusic();
     }
@@ -119,8 +129,10 @@ public class Panel extends JPanel {
         if (currentState == PLAYING)
         {
             tileManager.draw(g2d , xOffset);
-            player1.draw(g2d , xOffset);
             enemyManager.draw(g2d , xOffset);
+            collectableManager.draw(g2d , xOffset);
+            door.draw(g2d,xOffset);
+            player1.draw(g2d , xOffset);
         }
 
     }

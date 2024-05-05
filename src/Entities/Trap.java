@@ -3,6 +3,7 @@ package Entities;
 import Tiles.TileManager;
 
 import java.awt.*;
+import Audios.Audio;
 
 public  abstract  class Trap {
 
@@ -13,6 +14,7 @@ public  abstract  class Trap {
     Player player;
     Rectangle hitBox ;
     TileManager tileManager ;
+
     Trap(int x, int y, int width, int height, Player player , TileManager tileManager) {
         this.x = x ;
         this.y = y ;
