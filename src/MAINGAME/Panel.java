@@ -85,7 +85,8 @@ public class Panel extends JPanel {
         setAllSize();
     }
 
-    private void makeLevel(String tileMap , String enemyMap , String collectableMap , int playerX , int playerY , int doorX , int doorY )
+    private void makeLevel(String tileMap , String enemyMap , String collectableMap
+            , int playerX , int playerY , int doorX , int doorY )
     {
         tileManager.makeTiles(tileMap);
         enemyManager.addTraps(enemyMap);
@@ -116,13 +117,16 @@ public class Panel extends JPanel {
             //// MAKE LEVEL 2 ///////
             makeLevel("Map2","EnemyMap2","CollectableMap2",
                     64 , 64 , 198*TILE_SIZE,10*TILE_SIZE);
+            enemyManager.ball.setDefaults();
+            door.setDefaults();
+            door.levelUp = false;
         }
         if (HP <= 0 || door.over)
         {
             currentState = GAME_OVER ;
             if (HP <= 0) gameOver.won = false ;
             else gameOver.won = true ;
-            HP = 200;
+
             player1.setDefaults();
             enemyManager.ball.setDefaults();
             door.setDefaults();
