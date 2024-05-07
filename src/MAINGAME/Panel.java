@@ -4,6 +4,8 @@ import Audios.Audio;
 import Collectables.CollectableManager;
 import Entities.EnemyManager;
 import Entities.Player;
+import Levels.Level;
+import Levels.LevelManager;
 import Tiles.TileManager;
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +13,8 @@ import Door.Door;
 
 import static Entities.Player.HP;
 import static GameStates.StateConstants.*;
+import static Levels.LevelManager.LEVEL2;
+import static Levels.LevelManager.currentLevel;
 
 public class Panel extends JPanel {
 
@@ -50,22 +54,47 @@ public class Panel extends JPanel {
     public static int currentState = MENU ;
     ///// SOUNDS ///////
     Audio audio;
-    /// constructor /////
+    //// LEVELS /////////
+    LevelManager levelManager ;
+    Level level;
+
+    /// constructor ////
     Panel (Game game)
     {
         audio = new Audio();
-        tileManager = new TileManager() ;
+
+        levelManager = new LevelManager();
+
+        tileManager = new TileManager("Map");
         player1 = new Player(tileManager , audio);
+        enemyManager = new EnemyManager(this , tileManager , player1 , "EnemyMap");
+        collectableManager = new CollectableManager(player1, "CollectableMap");
+        ///// MAKE LEVEL 1 ////////
+        makeLevel("Map","EnemyMap","CollectableMap",
+                    64 , 64 , 191*TILE_SIZE,8*TILE_SIZE);
+
+
         menuPanel = new MenuPanel(player1.getKeyboard() , this) ;
-        enemyManager = new EnemyManager(this , tileManager , player1);
-        collectableManager = new CollectableManager(player1);
-        door = new Door(player1);
         gameOver = new GameOver(player1.getKeyboard() , this) ;
+
+
         setBackground(Color.BLACK);
         addKeyListener(player1.getKeyboard());
         addMouseListener(menuPanel.mouse);
         addMouseMotionListener(menuPanel.mouse);
         setAllSize();
+    }
+
+    private void makeLevel(String tileMap , String enemyMap , String collectableMap , int playerX , int playerY , int doorX , int doorY )
+    {
+        tileManager.makeTiles(tileMap);
+        enemyManager.addTraps(enemyMap);
+        collectableManager.addHealth(collectableMap);
+        door = new Door(player1 , doorX , doorY);
+        player1.x = playerX;
+        player1.y = playerY;
+        level = new Level(player1,tileManager,collectableManager,enemyManager,door);
+        levelManager.addLevel(level);
     }
 
     private void setAllSize() {
@@ -79,51 +108,29 @@ public class Panel extends JPanel {
     {
         if (currentState == PLAYING)
         {
-            checkCloseToBorder ();
-            tileManager.update(xOffset);
-            player1.update(xOffset);
-            enemyManager.update(xOffset);
-            collectableManager.update();
-            door.update();
+            levelManager.update();
+        }
+        if (door.levelUp)
+        {
+            currentLevel = LEVEL2;
+            //// MAKE LEVEL 2 ///////
+            makeLevel("Map2","EnemyMap2","CollectableMap2",
+                    64 , 64 , 198*TILE_SIZE,10*TILE_SIZE);
         }
         if (HP <= 0 || door.over)
         {
             currentState = GAME_OVER ;
-
             if (HP <= 0) gameOver.won = false ;
             else gameOver.won = true ;
-
             HP = 200;
             player1.setDefaults();
             enemyManager.ball.setDefaults();
             door.setDefaults();
-            collectableManager.resetHealth();
         }
         audio.playMusic();
     }
 
-    private void checkCloseToBorder() {
-        int playerX = player1.hitBox.x;
-        int diff = playerX - xOffset;
 
-        if (diff > rightBorder)
-        {
-            xOffset += diff - rightBorder;
-        }
-        else if (diff < leftBorder)
-        {
-            xOffset += diff - leftBorder;
-        }
-
-        if (xOffset > maxGameWidth)
-        {
-            xOffset = maxGameWidth;
-        }
-        else if (xOffset < 0)
-        {
-            xOffset = 0;
-        }
-    }
 
     public void paintComponent (Graphics g)
     {
@@ -139,11 +146,7 @@ public class Panel extends JPanel {
         }
         if (currentState == PLAYING)
         {
-            tileManager.draw(g2d , xOffset);
-            enemyManager.draw(g2d , xOffset);
-            collectableManager.draw(g2d , xOffset);
-            door.draw(g2d,xOffset);
-            player1.draw(g2d , xOffset);
+            levelManager.draw(g2d,xOffset);
         }
 
     }

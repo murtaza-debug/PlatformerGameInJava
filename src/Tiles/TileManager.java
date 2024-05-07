@@ -20,13 +20,14 @@ public class TileManager  {
     BufferedImage Map ;
     public static BufferedImage background;
 
-    public TileManager() {
-        Map = Load.Image("Map.png");
-        background = Load.Image("bg.jpg");
-        makeTiles();
-    }
-    public void makeTiles() {
+    public TileManager(String level) {
 
+        background = Load.Image("bg.jpg");
+        makeTiles(level);
+    }
+    public void makeTiles(String level) {
+        Map = Load.Image(level+".png");
+        if (!tiles.isEmpty()) tiles.clear();
         int k = 0;
         Color color ;
         for (int i = 0 ; i < 12; i++) {
@@ -40,6 +41,7 @@ public class TileManager  {
         }
 
     }
+
 
     public void update(int xOffset) {
 

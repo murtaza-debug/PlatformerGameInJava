@@ -17,15 +17,15 @@ public class CollectableManager {
     Player player;
     BufferedImage healthMap;
 
-    public CollectableManager(Player player) {
-        healthMap = Load.Image("CollectableMap.png");
+    public CollectableManager(Player player, String Level) {
         healths = new ArrayList<>();
         this.player = player;
-        addHealth();
+        addHealth(Level);
     }
 
-    private void addHealth() {
-
+    public void addHealth(String Level) {
+        healthMap = Load.Image(Level+".png");
+        if(!healths.isEmpty()) healths.clear();
         Color color ;
         for (int i = 0 ; i < 12; i++) {
             for (int j = 0 ; j < 200; j++) {
@@ -37,13 +37,6 @@ public class CollectableManager {
         }
     }
 
-    public void resetHealth()
-    {
-        for (int i = healths.size() -1 ; i>=0 ; i--) {
-            healths.remove(i);
-        }
-        addHealth();
-    }
 
     public void update()
     {

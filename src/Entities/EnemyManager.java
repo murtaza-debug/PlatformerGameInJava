@@ -22,19 +22,20 @@ public class EnemyManager {
     Player player;
     BufferedImage enemyMap;
     Audio audio ;
-    public EnemyManager(Panel panel , TileManager tileManager, Player player)
+    public EnemyManager(Panel panel , TileManager tileManager, Player player , String Map)
     {
-        enemyMap = Load.Image("EnemyMap.png");
+
         this.panel = panel;
         this.tileManager = tileManager;
         ball = new FireSkull(-100,64,20 , player , tileManager);
         this.player = player;
         audio = new Audio();
-        addTraps();
-
+        addTraps(Map);
     }
 
-    private void addTraps() {
+    public void addTraps(String Map) {
+        enemyMap = Load.Image(Map + ".png");
+        if(!traps.isEmpty()) traps.clear();
         int k = 0;
         Color color ;
         for (int i = 0 ; i < 12; i++) {

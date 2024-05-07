@@ -244,8 +244,7 @@ private void updatePosition (int xOffset)
     if (y >= 768) HP = 0;
     if (y <= 0)
     {
-        /// PLAYER CANNOT GO ABOVE THE SCREEN
-        ySpeed = (ySpeed > 0) ? ySpeed : -ySpeed;
+        y = 1 ;
     }
 
     HP -= 0.001 ;

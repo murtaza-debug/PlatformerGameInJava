@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static GameStates.StateConstants.MENU;
+import static Levels.LevelManager.*;
 import static MAINGAME.Panel.TILE_SIZE;
 import static MAINGAME.Panel.currentState;
 
@@ -25,8 +26,9 @@ public class Door {
     Player player ;
 
     public boolean over = false ;
+    public boolean levelUp = false ;
 
-    public Door(Player player) {
+    public Door(Player player , int x , int y) {
         doorLocation = Load.Image("DoorLocation.png");
         doorImage = Load.Image("Door.png");
         doorAnimation = new BufferedImage[16];
@@ -48,8 +50,8 @@ public class Door {
         doorAnimation[14] = doorImage.getSubimage(64,96,32,32);
         doorAnimation[15] = doorImage.getSubimage(96,96,32,32);
 
-        x = TILE_SIZE * 191;
-        y = TILE_SIZE * 8;
+        this.x = x;
+        this.y = y;
 
         doorHitBox = new Rectangle(x,y,64,64);
         this.player = player;
@@ -57,9 +59,10 @@ public class Door {
 
     private void checkHit()
     {
-        if (player.hitBox.intersects(doorHitBox))
-            over = true ;
-
+        if (player.hitBox.intersects(doorHitBox)) {
+            if(currentLevel == LEVEL1) levelUp = true;
+            if (currentLevel == LEVEL2) over = true ;
+        }
     }
 
     public void setDefaults ()
