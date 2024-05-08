@@ -246,6 +246,7 @@ private void updatePosition (int xOffset)
     {
         y = 1 ;
     }
+    if (x<= 0) x = 1;
 
     HP -= 0.001 ;
 
