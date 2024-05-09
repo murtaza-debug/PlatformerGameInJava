@@ -7,6 +7,7 @@ import UserInput.Keyboard;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static Levels.LevelManager.*;
 import static MAINGAME.Panel.GAME_HEIGHT;
 import static MAINGAME.Panel.GAME_WIDTH;
 
@@ -34,6 +35,11 @@ public class GameOver extends MenuPanel{
         }
         else
         {
+            if (currentLevel == LEVEL1)
+                CollectableManager.addHealth("CollectableMap");
+            else if(currentLevel == LEVEL2)
+                CollectableManager.addHealth("CollectableMap2");
+
             g.drawImage(lose , GAME_WIDTH / 2  - 200, GAME_HEIGHT / 2 - 300,400,150,null);
         }
 

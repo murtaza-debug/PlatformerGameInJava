@@ -39,7 +39,7 @@ public class Panel extends JPanel {
     //// ENTITIES AND MAPS //////
     Player player1;
     public TileManager tileManager ;
-    Door door;
+    public static Door door;
     ////// ENEMIES ///////
     EnemyManager enemyManager ;
 
@@ -55,7 +55,7 @@ public class Panel extends JPanel {
     //// LEVELS /////////
     LevelManager levelManager ;
     Level level;
-
+    LoadingPanel loadingPanel;
     /// constructor ////
     Panel (Game game)
     {
@@ -67,6 +67,8 @@ public class Panel extends JPanel {
         player1 = new Player(tileManager , audio);
         enemyManager = new EnemyManager(this , tileManager , player1 , "EnemyMap");
         collectableManager = new CollectableManager(player1, "CollectableMap");
+
+        loadingPanel = new LoadingPanel(tileManager,player1,enemyManager,collectableManager,levelManager);
         ///// MAKE LEVEL 1 ////////
         makeLevel("Map","EnemyMap","CollectableMap",
                     64 , 64 , 191*TILE_SIZE,8*TILE_SIZE);
@@ -86,14 +88,7 @@ public class Panel extends JPanel {
     private void makeLevel(String tileMap , String enemyMap , String collectableMap
             , int playerX , int playerY , int doorX , int doorY )
     {
-        tileManager.makeTiles(tileMap);
-        enemyManager.addTraps(enemyMap);
-        collectableManager.addHealth(collectableMap);
-        door = new Door(player1 , doorX , doorY);
-        player1.x = playerX;
-        player1.y = playerY;
-        level = new Level(player1,tileManager,collectableManager,enemyManager,door);
-        levelManager.addLevel(level);
+        loadingPanel.loadLevel(tileMap,enemyMap,collectableMap,playerX,playerY,doorX,doorY,level);
     }
 
     private void setAllSize() {

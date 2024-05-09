@@ -3,6 +3,7 @@ package Collectables;
 import Entities.HorizontalBall;
 import Entities.Player;
 import Entities.VerticalBall;
+import Levels.Level;
 import Loader.Load;
 
 import java.awt.*;
@@ -13,17 +14,19 @@ import static MAINGAME.Panel.TILE_SIZE;
 
 public class CollectableManager {
 
-    ArrayList<Health> healths ;
-    Player player;
-    BufferedImage healthMap;
+    public static ArrayList<Health> healths ;
+    static Player player;
+    static BufferedImage healthMap;
+    String level ;
 
     public CollectableManager(Player player, String Level) {
         healths = new ArrayList<>();
         this.player = player;
+        level = Level;
         addHealth(Level);
     }
 
-    public void addHealth(String Level) {
+    public static void addHealth(String Level) {
         healthMap = Load.Image(Level+".png");
         if(!healths.isEmpty()) healths.clear();
         Color color ;

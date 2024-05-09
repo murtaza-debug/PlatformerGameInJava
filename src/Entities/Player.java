@@ -142,7 +142,7 @@ public class Player {
     {
         aniTick = 0;
         aniIndex++;
-        if (aniIndex >= GetTotalImages(currentAnimation) - 1)
+        if (aniIndex >= GetTotalImages(currentAnimation))
         {
             aniIndex = 0;
         }
