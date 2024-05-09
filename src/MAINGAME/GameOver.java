@@ -1,5 +1,6 @@
 package MAINGAME;
 
+import Collectables.CollectableManager;
 import Loader.Load;
 import UserInput.Keyboard;
 

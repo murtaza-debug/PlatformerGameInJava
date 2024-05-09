@@ -38,6 +38,7 @@ public class CollectableManager {
     }
 
 
+
     public void update()
     {
         if (!healths.isEmpty())

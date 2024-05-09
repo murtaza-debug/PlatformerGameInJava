@@ -7,6 +7,7 @@ import Tiles.TileManager;
 import java.awt.*;
 
 import static Audios.AudioConstants.FIRE;
+import static MAINGAME.Panel.TILE_SIZE;
 import static MAINGAME.Panel.maxGameWidth;
 
 public class HorizontalBall extends Trap{
@@ -42,10 +43,13 @@ public class HorizontalBall extends Trap{
         if (currentAnimation == 0) {
             hitBox.x = x + 10;
             hitBox.y = y + 10;
+
+            hitBox.width = TILE_SIZE;
         }
         if (currentAnimation == 1) {
-            hitBox.x = x + 40;
+            hitBox.x = x + 10;
             hitBox.y = y + 5;
+            hitBox.width = TILE_SIZE ;
         }
 
     }

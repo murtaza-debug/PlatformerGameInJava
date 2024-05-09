@@ -28,11 +28,9 @@ public class Panel extends JPanel {
     public final static int GAME_HEIGHT = TILE_SIZE * TILES_IN_HEIGHT;
     //// CAMERA //////////
     public static int xOffset ;
-    public static int yOffset ;
     public static int leftBorder = (int) ( 0.5 * GAME_WIDTH) ;
     public static int rightBorder = (int) ( 0.6 * GAME_WIDTH) ;
     public static final int maxGameWidth = (200 )* TILE_SIZE ;
-    public static int maxGameHeight = (12) * TILE_SIZE;
 
 
 

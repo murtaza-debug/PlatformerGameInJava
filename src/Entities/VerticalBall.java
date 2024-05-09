@@ -7,6 +7,7 @@ import Tiles.TileManager;
 import java.awt.*;
 
 import static Audios.AudioConstants.FIRE;
+import static MAINGAME.Panel.TILE_SIZE;
 
 public class VerticalBall extends Trap{
 
@@ -44,11 +45,16 @@ public class VerticalBall extends Trap{
         if (currentAnimation == 0) {
             hitBox.x = x + 10;
             hitBox.y = y + 10;
+            hitBox.height = TILE_SIZE ;
         }
         if (currentAnimation == 1) {
             hitBox.x = x + 5;
-            hitBox.y = y + 40;
+            hitBox.y = y + 10;
+
+            hitBox.height = TILE_SIZE ;
         }
+
+
     }
     private void checkIfAttacking ()
     {
@@ -63,6 +69,9 @@ public class VerticalBall extends Trap{
             g.drawImage(fireAnimations.moveUp[fireAnimations.aniIndex] , x - xOffset , y , null );
         if (currentAnimation == 1)
             g.drawImage(fireAnimations.moveDown[fireAnimations.aniIndex] , x - xOffset , y , null );
+
+        g.setColor(Color.CYAN);
+        g.drawRect(hitBox.x - xOffset, hitBox.y, hitBox.width, hitBox.height);
     }
 
 
