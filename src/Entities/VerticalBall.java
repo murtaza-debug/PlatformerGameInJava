@@ -70,8 +70,8 @@ public class VerticalBall extends Trap{
         if (currentAnimation == 1)
             g.drawImage(fireAnimations.moveDown[fireAnimations.aniIndex] , x - xOffset , y , null );
 
-        g.setColor(Color.CYAN);
-        g.drawRect(hitBox.x - xOffset, hitBox.y, hitBox.width, hitBox.height);
+        //g.setColor(Color.CYAN);
+        //g.drawRect(hitBox.x - xOffset, hitBox.y, hitBox.width, hitBox.height);
     }
 
 

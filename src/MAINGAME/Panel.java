@@ -7,8 +7,10 @@ import Entities.Player;
 import Levels.Level;
 import Levels.LevelManager;
 import Tiles.TileManager;
+
 import javax.swing.*;
 import java.awt.*;
+
 import Door.Door;
 
 import static Entities.Player.HP;
@@ -33,7 +35,7 @@ public class Panel extends JPanel {
     public static final int maxGameWidth = (200 )* TILE_SIZE ;
 
 
-
+    //// FRAME SIZE
     Dimension dimension = new Dimension(GAME_WIDTH,GAME_HEIGHT);
 
     //// ENTITIES AND MAPS //////
@@ -71,7 +73,7 @@ public class Panel extends JPanel {
         loadingPanel = new LoadingPanel(tileManager,player1,enemyManager,collectableManager,levelManager);
         ///// MAKE LEVEL 1 ////////
         makeLevel("Map","EnemyMap","CollectableMap",
-                    64 , 64 , 191*TILE_SIZE,8*TILE_SIZE);
+                    64 , 64 , 193*TILE_SIZE,9*TILE_SIZE);
 
 
         menuPanel = new MenuPanel(player1.getKeyboard() , this) ;
@@ -114,6 +116,7 @@ public class Panel extends JPanel {
             door.setDefaults();
             door.levelUp = false;
         }
+        //// GAME OVER OR LEVEL SHIFT
         if (HP <= 0 || door.over)
         {
             currentState = GAME_OVER ;
@@ -145,7 +148,6 @@ public class Panel extends JPanel {
         {
             levelManager.draw(g2d,xOffset);
         }
-
     }
 
 }

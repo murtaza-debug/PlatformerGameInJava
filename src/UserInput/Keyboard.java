@@ -12,6 +12,7 @@ import static GameStates.StateConstants.PLAYING;
 public class Keyboard implements KeyListener {
 
     public boolean Space, Attack1 , Attack2 , Left , Right ;
+    public boolean A_Left , A_Right ;
     Player player1;
 
     public Keyboard (Player player1)
@@ -50,6 +51,12 @@ public class Keyboard implements KeyListener {
                 case KeyEvent.VK_D :
                     Right = true ;
                     break;
+                case KeyEvent.VK_LEFT:
+                    A_Left = true ;
+                    break ;
+                case KeyEvent.VK_RIGHT:
+                    A_Right = true ;
+                    break;
             }
 
     }
@@ -73,6 +80,12 @@ public class Keyboard implements KeyListener {
                 break;
             case KeyEvent.VK_D :
                 Right = false ;
+                break;
+            case KeyEvent.VK_LEFT:
+                A_Left = false ;
+                break ;
+            case KeyEvent.VK_RIGHT:
+                A_Right = false ;
                 break;
         }
     }

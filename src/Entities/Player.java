@@ -90,19 +90,22 @@ public class Player {
     {
         if (isMoving)
         {
-            if (direction == LEFT && keyboard.Left && !keyboard.Right) {
+            if (direction == LEFT && (keyboard.A_Left || keyboard.Left)
+                    && !(keyboard.Right || keyboard.A_Right)) {
                 if (currentAnimation != RUNNING_LEFT ) {
                     currentAnimation = RUNNING_LEFT;
                     aniIndex = 0;
                 }
             }
-            if (direction == RIGHT && keyboard.Right && !keyboard.Left) {
+            if (direction == RIGHT && (keyboard.A_Right || keyboard.Right)
+                    && !(keyboard.A_Left || keyboard.Left)) {
                 if (currentAnimation != RUNNING_RIGHT ) {
                     currentAnimation = RUNNING_RIGHT;
                     aniIndex = 0;
                 }
             }
-            if (keyboard.Left && !keyboard.Right || !keyboard.Left && keyboard.Right) {
+            if ((keyboard.Left || keyboard.A_Left) && !(keyboard.A_Right || keyboard.Right)
+                    || !(keyboard.A_Left || keyboard.Left) && (keyboard.Right || keyboard.A_Right)) {
                 updateAudio(RUNNING);
             }
         }
@@ -156,15 +159,16 @@ private void updatePosition (int xOffset)
 {
     /// moving left and right //////
     isMoving = false ;
-    if (keyboard.Left && keyboard.Right || !keyboard.Left && !keyboard.Right
+    if ((keyboard.Left || keyboard.A_Left) && (keyboard.Right || keyboard.A_Right)
+            || !(keyboard.Left || keyboard.A_Left) && !(keyboard.A_Right || keyboard.Right)
             || keyboard.Attack1 || keyboard.Attack2) xSpeed *= 0.7 ;
 
-    else if (keyboard.Left && !keyboard.Right) {
+    else if ((keyboard.Left || keyboard.A_Left) && !(keyboard.Right || keyboard.A_Right)) {
         xSpeed --;
         isMoving = true ;
         direction = LEFT;
     }
-    else if (keyboard.Right && !keyboard.Left)
+    else if ((keyboard.Right || keyboard.A_Right) && !(keyboard.Left || keyboard.A_Left))
     {
         xSpeed ++;
         isMoving = true ;

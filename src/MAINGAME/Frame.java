@@ -18,6 +18,7 @@ public class Frame extends JFrame {
         panel.requestFocus();
         pack();
 
+        setTitle("Haunted run");
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
